@@ -40,3 +40,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw footage and exports never enter the repo (asset-pipeline.md → Source handling)
+*.mov
+*.mxf
+*.prores
+*.braw
+*.r3d
+raw/
+ffmpeg2pass-*.log

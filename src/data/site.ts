@@ -17,15 +17,17 @@ export const site: Site = {
     { label: 'Vimeo', href: '{{VIMEO_URL}}' },
     { label: 'LinkedIn', href: '{{LINKEDIN_URL}}' },
   ],
-  vimeoReelId: '{{VIMEO_REEL_ID}}',
-  reelRuntime: '{{REEL_RUNTIME}}',
+  // Demo reel: "Big Buck Bunny" by Blender (CC-BY), a public Vimeo video — the developer has
+  // no Vimeo account. Swap for the filmmaker's unlisted reel id (with `?h=` hash if unlisted).
+  vimeoReelId: '1084537',
+  reelRuntime: '09:57',
   developer: { name: '{{DEVELOPER_NAME}}', href: '{{DEVELOPER_URL}}' },
   assets: {
     heroLoop: {
       mp4: '/video/hero/loop.mp4',
       webm: '/video/hero/loop.webm',
       poster: '/img/hero/poster.jpg',
-      durationSec: 10,
+      durationSec: 8,
     },
     reelPoster: '/img/reel/poster.jpg',
     portrait: {

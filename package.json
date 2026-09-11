@@ -10,6 +10,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "content:check": "node scripts/content-check.mjs",
+    "asset:video": "node scripts/encode-video.mjs",
+    "asset:still": "node scripts/encode-still.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

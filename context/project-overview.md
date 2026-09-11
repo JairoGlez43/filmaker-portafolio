@@ -27,10 +27,20 @@ that this person knows how to hold a shot.
 
 ## Client status
 
-There is a _potential_ client. Until confirmed, every client-specific fact is a visible
-placeholder in `src/data/site.ts` (`{{FILMMAKER_NAME}}`, `{{TAGLINE}}`, `{{CITY}}`…).
-Sample projects are fictional and clearly labelled as such in the data file. The agent
-must never invent real-sounding names, brands, awards or credits.
+There is **no client** (clarified 2026-09-12). The developer is a programmer, not a
+filmmaker; REELFRAME is a portfolio piece — **repo private, site deployed** — and a
+**template** that a real filmmaker could adopt later by replacing `src/data/*` and
+`public/`. The developer shoots the footage himself (hobby, professional camera).
+Consequences:
+
+- Every identity fact is a visible placeholder in `src/data/site.ts` (`{{FILMMAKER_NAME}}`,
+  `{{CITY}}`…). Sample projects are fictional and labelled `fictional: true`. The agent
+  must never invent real-sounding names, brands, awards or credits.
+- Demo assets (loops, stills, posters) are the developer's own or CC0, with their source
+  recorded in `progress-tracker.md` → Notes. The repo is private, so committed demo footage
+  is acceptable; still nothing of third parties without permission (git history is forever).
+- Services the developer does not have (Vimeo) are exercised with public IDs, never with
+  fabricated accounts. The template keeps them optional where the data model allows.
 
 ## Pages
 

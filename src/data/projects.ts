@@ -18,6 +18,35 @@ function stills(slug: string, count: number): Still[] {
   });
 }
 
+// Demo stills for northern-light: the developer's own frames, encoded with `pnpm asset:still`
+// (dimensions are the encoded files'). Alt text describes the frame, never the client.
+const NORTHERN_LIGHT_STILLS: Still[] = [
+  {
+    src: '/img/northern-light/still-01.jpg',
+    alt: 'Motor yacht at anchor on calm water at sunset, a high-rise skyline along the shore behind it',
+    width: 1451,
+    height: 1084,
+  },
+  {
+    src: '/img/northern-light/still-02.jpg',
+    alt: 'Vertical frame of the same yacht at sunset, low sun flaring over the water and the skyline',
+    width: 1122,
+    height: 1402,
+  },
+  {
+    src: '/img/northern-light/still-03.jpg',
+    alt: 'Drone shot straight down on the bow of a yacht, two people lying on red sun pads over dark water',
+    width: 1280,
+    height: 1600,
+  },
+  {
+    src: '/img/northern-light/still-04.jpg',
+    alt: 'Drone shot straight down on a lone yacht on dark, glittering water, swim platform open at the stern',
+    width: 787,
+    height: 1400,
+  },
+];
+
 export const projects: Project[] = [
   {
     slug: 'northern-light',
@@ -33,7 +62,7 @@ export const projects: Project[] = [
       poster: '/img/northern-light/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('northern-light', 4),
+    stills: NORTHERN_LIGHT_STILLS,
     credits: [
       { label: 'Director', value: '{{FILMMAKER_NAME}}' },
       { label: 'Editor', value: '{{FILMMAKER_NAME}}' },
@@ -55,7 +84,7 @@ export const projects: Project[] = [
       mp4: '/video/salt-roads/loop.mp4',
       webm: '/video/salt-roads/loop.webm',
       poster: '/img/salt-roads/poster.jpg',
-      durationSec: 6,
+      durationSec: 7,
     },
     stills: stills('salt-roads', 4),
     credits: [
@@ -78,7 +107,7 @@ export const projects: Project[] = [
       mp4: '/video/interval/loop.mp4',
       webm: '/video/interval/loop.webm',
       poster: '/img/interval/poster.jpg',
-      durationSec: 8,
+      durationSec: 7,
     },
     stills: stills('interval', 4),
     credits: [
@@ -101,7 +130,7 @@ export const projects: Project[] = [
       mp4: '/video/ninety-seconds/loop.mp4',
       webm: '/video/ninety-seconds/loop.webm',
       poster: '/img/ninety-seconds/poster.jpg',
-      durationSec: 6,
+      durationSec: 7,
     },
     stills: stills('ninety-seconds', 4),
     credits: [

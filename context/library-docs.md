@@ -213,9 +213,11 @@ under `src/`.
 ### ffmpeg (tooling)
 
 **Check first:** `ffmpeg -version` ≥ 6; `https://trac.ffmpeg.org/wiki/Encode/H.264`, `.../Encode/VP9`.
-**Version pinned:** whatever Homebrew/apt provides; record here.
-**How we use it here:** only through `scripts/encode-video.mjs` (`pnpm asset:video`).
-Presets in `asset-pipeline.md`.
+**Version pinned:** ffmpeg 9.0.1 full build (`winget install Gyan.FFmpeg`, 2026-09-12),
+with `libx264` and `libvpx-vp9`. New terminals see it on PATH; a shell opened before the
+install does not.
+**How we use it here:** only through `scripts/encode-video.mjs` (`pnpm asset:video`) and
+`scripts/encode-still.mjs` (`pnpm asset:still`). Presets in `asset-pipeline.md`.
 **Gotchas:** VP9 two-pass writes `ffmpeg2pass-0.log` in CWD — the script deletes it;
 `-an` is mandatory (loops must have no audio track, or iOS may refuse autoplay).
 **Rules:** never hand-tune encodes; change the script.

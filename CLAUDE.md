@@ -39,6 +39,9 @@ Skim, don't memorize. Re-open the specific file when the feature needs it.
 - **Before calling anything done:** run the `review` skill. `pnpm typecheck`,
   `pnpm lint`, `pnpm build` must all pass. Never claim green without running them.
 - **End:** update `progress-tracker.md`. If mid-feature, run `remember` (save).
+- **Commits are the developer's.** The agent never runs `git commit` or `git push`. When a
+  feature passes `review`, the agent ends its report with a ready-to-paste commit message
+  in English (subject + bullets) and stops.
 
 ## The STOP rule
 

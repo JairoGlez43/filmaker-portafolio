@@ -70,13 +70,13 @@ output of `pnpm content:check` (60 files as of 2026-09-11). This table is the su
 | ----------------------------------- | ----------- | --------------------------------------------- |
 | Prologue plates ×9                  | missing     | choose with Script chat; same grade as hero   |
 | OG default image                    | missing     | `public/og/default.jpg`, 1200×630             |
-| Hero loop + poster                  | missing     | poster = loop frame 0 = prologue final mosaic |
-| Project loops ×5                    | missing     | placeholders: own footage or CC0              |
-| Stills                              | missing     |                                               |
+| Hero loop + poster                  | demo        | 2026-09-12: developer's clip, 576p upscaled (soft) — replace with a 1080p master; poster = frame 0 |
+| Project loops ×5                    | demo        | 2026-09-12: the same clip trimmed to 7 s in all 5 slugs, to exercise VideoLoop; not five projects |
+| Stills                              | demo (1/5)  | 2026-09-12: 4 stills on `northern-light` only; other projects still missing               |
 | Craft: storyboard SVG               | missing     | draw in Figma/Illustrator, export strokes     |
 | Craft: contact-sheet frames ×6      | missing     |                                               |
 | Craft: log/grade pair               | missing     | needs Resolve session                         |
-| Reel poster + Vimeo ID              | missing     |                                               |
+| Reel poster + Vimeo ID              | ID demo / poster missing | Vimeo ID `1084537` (Big Buck Bunny, CC-BY) as demo; poster still missing |
 | Portrait                            | missing     |                                               |
 | Blender scene (Phase 5)             | not started | Blender chat; 9 planes, DOF, rim light        |
 | Prologue sequence d/ + m/ (Phase 5) | missing     | 150 WebP each; `pnpm asset:seq`               |
@@ -98,3 +98,11 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 
 _Workarounds, patterns, anything that differs from the context files. Also: the
 keyboard walkthrough log from feature 22 and the Lighthouse numbers from 21._
+
+### Asset provenance (demo material — swap before any real client ships)
+
+| Asset | Source | Rights | Note |
+| --- | --- | --- | --- |
+| `video/hero/loop.*`, all 5 project loops + posters | `~/Documents/WebDev projects/reelframe-sources/hero/vide-1.mp4` (developer's folder) | developer's own material; repo is private (2026-09-12) — to be replaced by footage he shoots himself | Source is 1024×576, upscaled to 1080p — looks soft; one clip reused for hero + 5 slugs (7 s trims) to exercise the machinery. Replace with 1080p masters. Encoded `--crf-h264 26`. |
+| `site.vimeoReelId` = `1084537` | "Big Buck Bunny", Blender Foundation, public on Vimeo | CC-BY 3.0 (Blender Foundation) | Demo reel for `LazyVimeo`; the developer has no Vimeo account. Verified via Vimeo oEmbed 2026-09-12. |
+| `img/northern-light/still-01…04.jpg` | `reelframe-sources/stills/1.PNG, 2.PNG, 3.JPG, 4.JPEG` | developer's material; repo private — demo only, to be replaced | Yacht / skyline frames from another of the developer's projects. 01–02 `--quality 5`; 03 `--max 1600 --quality 5`; 04 `--max 1400 --quality 7` (full-frame glittering water is the JPEG worst case). |

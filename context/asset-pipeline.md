@@ -17,7 +17,7 @@ pipeline before it touches `public/`. Raw exports never get committed.
 | Hero poster                          | 1                 | `public/img/hero/poster.jpg`            | 1920×1080 JPG q82      | ≤ 250 KB                         |
 | Project loop                         | 1 per project (5) | `public/video/<slug>/loop.{mp4,webm}`   | 1920×1080, 6–8 s       | ≤ 3 MB each; scene total ≤ 15 MB |
 | Project poster                       | 1 per project     | `public/img/<slug>/poster.jpg`          | 1920×1080 JPG q82      | ≤ 250 KB                         |
-| Project stills                       | 4–8 per project   | `public/img/<slug>/still-NN.jpg`        | ≤ 2400 px wide JPG q85 | ≤ 400 KB                         |
+| Project stills                       | 4–8 per project   | `public/img/<slug>/still-NN.jpg`        | ≤ 2400 px longest side, JPG q85 | ≤ 400 KB                         |
 | Craft: storyboard                    | 1                 | `public/img/craft/storyboard.svg`       | SVG, strokes only      | ≤ 40 KB                          |
 | Craft: direction still               | 1                 | `public/img/craft/direction.jpg`        | 1920 px                | ≤ 300 KB                         |
 | Craft: contact sheet                 | 6                 | `public/img/craft/frames/f-01…06.webp`  | 640 px wide WebP       | ≤ 60 KB each                     |
@@ -166,6 +166,17 @@ dev tooling, not runtime) below threshold, fails otherwise.
 drop to 120 frames before dropping quality — the scrub is scroll-driven, so 120 frames
 over 250 vh is still ~1 frame per 2 % of scroll.
 
+## Stills (the script — `pnpm asset:still <input> <slug> <index> [--quality 3]`)
+
+`scripts/encode-still.mjs` writes `public/img/<slug>/still-NN.jpg`: **longest side**
+capped at 2400 px (never upscaled — a portrait still in the two-column gallery is never
+shown wider than that, and capping only the width would leave a 9:16 frame at 10 MP),
+metadata stripped, JPG via ffmpeg `-q:v` (3 ≈ q85; 5 for noisy frames such as water).
+Over the limit? Drop the cap first (`--max 1600` — a still in the two-column gallery is
+never shown larger), then quality. The script suggests the next step itself. Prints the final `width`/`height` for `projects.ts` and fails if the file
+exceeds `LIMITS.stillMaxBytes`, suggesting a higher `--quality` number (lower quality).
+Portrait and OG image are one-offs outside this script.
+
 ## Images
 
 - JPG sources sized to the max display width × 1.25 (retina-honest, not 2×): posters 1920,
@@ -184,7 +195,7 @@ Files: `loop.mp4`, `loop.webm`, `poster.jpg`, `still-01.jpg`… Two-digit indice
 
 Use footage you have rights to: your own shots, or CC0 clips (Pexels/Pixabay video,
 check each license). Label them in `projects.ts` with `fictional: true` and mention
-the source in `memory.md` → Notes so they're swapped, not shipped as the client's.
+the source in `progress-tracker.md` → Notes so they're swapped, not shipped as the client's.
 
 ## Sequence checklist (Phase 5 — `asset-check` runs this too)
 
