@@ -1,0 +1,92 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Kill defaults so only project tokens exist */
+  --color-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+
+  /* Fonts — set by next/font in layout.tsx as --font-inter-tight / --font-jetbrains-mono.
+     display and sans are the SAME family on purpose (one file, one voice); the display
+     token stays so a future change of the display face is one line here. */
+  --font-display: var(--font-inter-tight), system-ui, sans-serif;
+  --font-sans: var(--font-inter-tight), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Backgrounds / surfaces — a black room with two greys */
+  --color-bg: #0a0a0a;
+  --color-surface: #121212;
+  --color-surface-2: #1c1c1c;
+
+  /* Borders / lines */
+  --color-line: #262626;
+  --color-line-strong: #3a3a3a;
+
+  /* Text — warm off-white so it sits with film, not UI */
+  --color-text-primary: #f2f0eb;
+  --color-text-muted: #8f8d87;
+  --color-text-faint: #4f4e4a;
+
+  /* Accent — a single record-light red. Sparingly. */
+  --color-accent: #e5392d;
+  --color-accent-soft: #e5392d33;
+
+  /* States (used almost only on the dev page and 404) */
+  --color-error: #e5392d;
+  --color-success: #7fb069;
+
+  /* Overlays over video */
+  --color-scrim: #0a0a0ab3;
+  --color-scrim-soft: #0a0a0a66;
+
+  /* Radius — near-square; film frames aren't round */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-full: 9999px;
+
+  /* Type scale — fluid, clamp(min, preferred, max) */
+  --text-display-xl: clamp(3rem, 10vw, 11rem);
+  --text-display: clamp(2.25rem, 5vw, 5rem);
+  --text-h2: clamp(1.5rem, 2.5vw, 2.25rem);
+  --text-body: clamp(1rem, 1.1vw, 1.125rem);
+  --text-mono: 0.8125rem;
+  --text-mono-sm: 0.6875rem;
+
+  /* Spacing — 8-based, plus gutters and the letterbox band */
+  --spacing-gutter: clamp(1rem, 4vw, 3rem);
+  --spacing-band: clamp(1.25rem, 3vw, 2.5rem);
+  --spacing-section: clamp(6rem, 12vw, 12rem);
+
+  /* Motion (CSS side; GSAP side in src/lib/motion.ts) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.87, 0, 0.13, 1);
+  --dur-fast: 300ms;
+  --dur-base: 600ms;
+  --dur-slow: 1100ms;
+
+  /* Layout */
+  --container-max: 1600px;
+  --nav-h: 64px;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-accent-soft);
+    color: var(--color-text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+}
