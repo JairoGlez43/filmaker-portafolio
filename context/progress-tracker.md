@@ -12,9 +12,9 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 1 — Foundation
-- **Last completed:** 01 Scaffold, tokens, fonts (2026-09-11) — typography confirmed by the developer on `/dev/type`: Inter Tight (display + body) + JetBrains Mono (provisional)
+- **Last completed:** 02 Content model + data files (2026-09-11) — `pnpm content:check --allow-missing` green; 60 asset paths referenced, 0 present
 - **In progress:** —
-- **Next:** 02 Content model + data files
+- **Next:** 03 Layout shell
 - **Blockers:** hero/project footage and the 9 prologue plates not yet sourced (see asset-pipeline.md → Placeholders / Prologue plates)
 - **⏸ HUMAN gates open:** none yet (features 01–06 need no human asset)
 
@@ -23,7 +23,7 @@ and next. Update after every completed feature. A feature is checked only after 
 ### Phase 1 — Foundation
 
 - [x] 01 Scaffold, tokens, fonts
-- [ ] 02 Content model + data files
+- [x] 02 Content model + data files
 - [ ] 03 Layout shell
 - [ ] 04 Motion foundation
 - [ ] 05 Media primitives
@@ -63,9 +63,13 @@ and next. Update after every completed feature. A feature is checked only after 
 
 ## Asset status
 
+The exact, always-current deliverable list with canonical paths and size limits is the
+output of `pnpm content:check` (60 files as of 2026-09-11). This table is the summary.
+
 | Asset                               | Status      | Source / note                                 |
 | ----------------------------------- | ----------- | --------------------------------------------- |
 | Prologue plates ×9                  | missing     | choose with Script chat; same grade as hero   |
+| OG default image                    | missing     | `public/og/default.jpg`, 1200×630             |
 | Hero loop + poster                  | missing     | poster = loop frame 0 = prologue final mosaic |
 | Project loops ×5                    | missing     | placeholders: own footage or CC0              |
 | Stills                              | missing     |                                               |
@@ -80,6 +84,10 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Decisions made during build
 
 _Append: date · decision · why. Keeps them from being re-litigated._
+
+- 2026-09-11 · `content:check` separates structural errors from missing files, with `--allow-missing` for phases 1–2 · a check that passed with an empty `public/` would lie; one that always failed would be ignored. Missing files print as the ⏸ HUMAN deliverable list.
+- 2026-09-11 · `Site.assets` added to the data model (hero loop, reel poster, portrait, OG) · those assets belong to no project and needed a typed home for the check and the scenes.
+- 2026-09-11 · `/dev/content` is the one `src/` file that touches `node:fs` · it is a dev inspector deleted in 21, not part of the site.
 
 ## Notes
 

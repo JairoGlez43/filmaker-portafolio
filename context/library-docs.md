@@ -190,6 +190,22 @@ domain-level privacy. Autoplay with sound is blocked without a user gesture; our
 is the gesture, so mount inside the click handler's effect.
 **Rules:** no Vimeo SDK; no iframe before interaction; `title` attribute on the iframe.
 
+### Node (scripts)
+
+**Check first:** `node --version` ≥ 24; `https://nodejs.org/api/typescript.html` (type stripping).
+**Version pinned:** Node 24.16.0 on the developer's machine (2026-09-11).
+**How we use it here:** `scripts/*.mjs` import `src/data/*.ts` and `src/lib/constants.ts`
+directly — Node strips the types natively, so the scripts read the same data and limits
+as the site with no extra dependency (no `tsx`, no `ts-node`). `package.json` has
+`"type": "module"` so Node does not warn about the `.ts` modules.
+**Gotchas:** only erasable TypeScript syntax is allowed in files a script imports —
+`import type`, annotations, `as const`, `satisfies`. No `enum`, no `namespace`, no
+parameter properties, no `import x = require()`. Value imports of `@/…` aliases do not
+resolve in Node: data files may only `import type` from `@/types/*`, and scripts import
+data by relative path, never `src/lib/content.ts`.
+**Rules:** scripts import data and constants, never components; a script never writes
+under `src/`.
+
 ### ffmpeg (tooling)
 
 **Check first:** `ffmpeg -version` ≥ 6; `https://trac.ffmpeg.org/wiki/Encode/H.264`, `.../Encode/VP9`.

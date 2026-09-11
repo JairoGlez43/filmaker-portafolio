@@ -202,10 +202,19 @@ Rule: never invent an event without adding it here first.
 | `SEQ.dprCap`                                                                         | `1.5`                      | canvas sizing                                   |
 | `SEQ.priorityStride`                                                                 | `[8, 4, 1]`                | preload order                                   |
 | `LIMITS.seqMaxBytes`                                                                 | `{ d: 6.5 MB, m: 4.5 MB }` | `asset:seq`, `asset-check`                      |
+| `LIMITS.posterMaxBytes` | `250 KB` | `content:check` (project, hero and reel posters) |
+| `LIMITS.stillMaxBytes` | `400 KB` | `content:check` |
+| `LIMITS.plateMaxBytes` | `150 KB` | `content:check` (prologue plates) |
+| `LIMITS.portraitMaxBytes` | `300 KB` | `content:check` |
+| `LIMITS.ogMaxBytes` | `200 KB` | `content:check` |
+| `LIMITS.craftStoryboardMaxBytes` / `craftDirectionMaxBytes` / `craftFrameMaxBytes` / `craftGradeMaxBytes` | `40 KB` / `300 KB` / `60 KB` / `300 KB` | `content:check` (scene 04 assets) |
+| `LIMITS.loopDurationSec` / `heroLoopDurationSec` | `{ min: 6, max: 8 }` / `{ min: 8, max: 12 }` | `content:check` |
+| `LIMITS.maxRolesPerProject` | `3` | `content:check` (ui-rules → Badge: max 3 per card) |
 | `PROLOGUE_SKIP_KEY`                                                                  | `'rf:prologue-seen'`       | sessionStorage flag                             |
 | `BREAKPOINT.md / .lg`                                                                | `768` / `1024`             | `gsap.matchMedia` queries, `sizes`              |
-| Motion values (`EASE`, `DUR`) live in `src/lib/motion.ts` and mirror `ui-tokens.md`. |
-| Rule: never write these literals anywhere else.                                      |
+
+Motion values (`EASE`, `DUR`) live in `src/lib/motion.ts` and mirror `ui-tokens.md`.
+Rule: never write these literals anywhere else.
 
 ## Lint & format
 

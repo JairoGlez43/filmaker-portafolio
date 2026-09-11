@@ -2,12 +2,14 @@
   "name": "reelframe",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "content:check": "node scripts/content-check.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

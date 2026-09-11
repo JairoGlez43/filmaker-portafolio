@@ -147,8 +147,8 @@ export interface Project {
   order: number; // position in Selected Work and Next-project chain
   runtime?: string; // '01:48'
   vimeoId?: string; // case-study hero; optional → poster only
-  loop: { mp4: string; webm: string; poster: string; durationSec: number };
-  stills: { src: string; alt: string; width: number; height: number }[];
+  loop: Loop; // { mp4, webm, poster, durationSec }
+  stills: Still[]; // { src, alt, width, height }
   credits: Credit[];
   summary: string; // 1–2 sentences for the case study + OG description
   fictional: true; // stays true until a real client replaces the data
@@ -188,12 +188,22 @@ export interface Site {
   vimeoReelId: string;
   reelRuntime: string;
   developer: { name: string; href: string };
+  assets: SiteAssets; // hero loop, reel poster, portrait, OG default — assets that belong to no project
+}
+
+export interface SiteAssets {
+  heroLoop: Loop;
+  reelPoster: string;
+  portrait: Still;
+  ogDefault: string;
 }
 ```
 
-Validation: `src/lib/content.ts` runs a dev-only assertion that every `slug` is unique,
-`order` is contiguous, and every referenced asset path exists (Node `fs` at build time
-via a small script `pnpm content:check`).
+Validation: `scripts/content-check.mjs` (`pnpm content:check`) imports the data files
+directly and checks slugs, contiguous `order`, canonical asset paths per slug, still
+dimensions and alt text, and — for files that exist — size limits from `constants.ts`.
+Missing files are reported as the ⏸ HUMAN deliverable list (`--allow-missing` lets
+phases 1–2 pass without assets). `src/lib/content.ts` stays pure: accessors only.
 
 ## Storage
 

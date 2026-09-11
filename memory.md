@@ -10,6 +10,7 @@
 
 _Cause → fix. Only things that cost real time. One line each, newest first._
 
+- 2026-09-11 · Node warns `MODULE_TYPELESS_PACKAGE_JSON` when a `.mjs` script imports `.ts` data files → `"type": "module"` in `package.json`; Next 16, tsc and ESLint are all fine with it.
 - 2026-09-11 · Moving the project folder or reinstalling deps leaves a stale Turbopack cache: `next/font` then fails with `Can't resolve '@vercel/turbopack-next/internal/font/google/font'` → stop the dev server, delete `.next` entirely, restart. Not a code or network problem.
 - (seed) GSAP + Lenis: pins jump if `ScrollTrigger.refresh()` runs before fonts load → refresh once on `document.fonts.ready` in `MotionProvider`.
 - (seed) iOS Safari refuses muted autoplay when the file has an audio track → always encode with `-an`.

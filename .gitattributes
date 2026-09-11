@@ -1,0 +1,16 @@
+# Keep LF in the repo and in every working copy (Windows included) so Prettier,
+# ESLint and Git never disagree about line endings.
+* text=auto eol=lf
+
+# Binary assets — never touch their bytes.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.webm binary
+*.woff binary
+*.woff2 binary

@@ -59,7 +59,11 @@ roles, and asset paths; broken paths in `error` color.
 Logic: `src/types/content.ts`, `src/data/*.ts` with 5 fictional placeholder
 projects, `src/lib/content.ts` accessors, `scripts/content-check.mjs`
 (unique slugs, contiguous order, referenced files exist).
-Done: `pnpm content:check` fails when a path is wrong and passes when fixed.
+Done: `pnpm content:check` fails when a path is wrong and passes when fixed. The check
+has two severities: structural errors (slug, order, non-canonical path, oversized file)
+always fail; referenced files that do not exist yet are listed as the ⏸ HUMAN
+deliverable list and fail unless `--allow-missing` is passed — the flag phases 1–2 run
+with, since no asset exists before the Assets chat produces it.
 Notes: Placeholder project titles must sound like working titles, not brands
 (`Northern Light`, `Salt Roads`, `Interval`, `Ninety Seconds`, `Undertow`).
 
