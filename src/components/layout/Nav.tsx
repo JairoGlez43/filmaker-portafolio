@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { readCssPx } from '@/components/motion/cssVars';
+import { useLenis } from '@/components/motion/MotionProvider';
 
 const LINKS = [
   { label: 'Work', href: '/#work' },
@@ -15,12 +17,14 @@ const LINKS = [
  * rule and a solid background appear so the mono text never floats over footage.
  *
  * The stuck state comes from an IntersectionObserver on a 100 svh sentinel — no scroll
- * listener, no GSAP (motion-rules → Scroll rules). Lenis takes over the anchor scrolling
- * in feature 04; until then the links are plain hash anchors.
+ * listener, no GSAP (motion-rules → Scroll rules). On the home page with Lenis active the
+ * anchors scroll through Lenis (native anchor jumps break its sync); everywhere else, and
+ * under reduced motion, they are plain links.
  */
 export function Nav({ name }: { name: string }) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [stuck, setStuck] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
@@ -31,6 +35,16 @@ export function Nav({ name }: { name: string }) {
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, []);
+
+  const onAnchorClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!lenis || window.location.pathname !== '/') return;
+    const hash = href.slice(href.indexOf('#'));
+    const target = document.querySelector<HTMLElement>(hash);
+    if (!target) return;
+    event.preventDefault();
+    lenis.scrollTo(target, { offset: -readCssPx('--nav-h') });
+    window.history.pushState(null, '', hash);
+  };
 
   const linkClass =
     'flex h-full items-center px-3 font-mono text-mono tracking-[0.06em] text-text-muted uppercase transition-colors duration-(--dur-fast) ease-out hover:text-text-primary focus-visible:text-text-primary motion-reduce:transition-none';
@@ -54,7 +68,11 @@ export function Nav({ name }: { name: string }) {
           <ul className="flex h-full items-center">
             {LINKS.map((link) => (
               <li key={link.href} className="h-full last:-mr-3">
-                <Link href={link.href} className={linkClass}>
+                <Link
+                  href={link.href}
+                  className={linkClass}
+                  onClick={(event) => onAnchorClick(event, link.href)}
+                >
                   {link.label}
                 </Link>
               </li>

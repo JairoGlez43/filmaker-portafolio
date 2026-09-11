@@ -49,9 +49,14 @@ One line per component. Notes = the one thing a future session must know
 
 ## Components — `motion/` (client wrappers)
 
-| Name    | Path | Purpose | Key props | Notes |
-| ------- | ---- | ------- | --------- | ----- |
-| _empty_ |      |         |           |       |
+| Name | Path | Purpose | Key props | Notes |
+| --- | --- | --- | --- | --- |
+| `MotionProvider` + `useLenis()` | `src/components/motion/MotionProvider.tsx` | Registers GSAP plugins once; owns the single Lenis instance and the ticker sync; `ScrollTrigger.refresh()` on `fonts.ready` | `children` | Wrapped around the body in `layout.tsx`. No Lenis under reduced motion (watched live). `useLenis()` returns the instance or `null` — via `useSyncExternalStore`, not context. |
+| `Reveal` | `src/components/motion/Reveal.tsx` | Triggered reveal at `top 85%`, once | `variant: 'wipe' \| 'soft'` (default wipe), `className` | Start state is CSS (`[data-reveal]`), see motion-rules → No flash. Reduced: `DUR.fast` fade. |
+| `Pin` + `usePin()` | `src/components/motion/Pin.tsx` | Pins a scene `vh`% and owns its one scrubbed timeline | `vh` (always `PIN.*`), `className` | Children in `motion/` add tweens via `usePin()` (null on server — guard). Reduced: no pin, `progress(1)`. |
+| `ScrubWords` | `src/components/motion/ScrubWords.tsx` | Words faint → primary as the pin scrubs; last word `accent` in the final 10 % | `text` (≤ 20 words), `className` | Must be inside `<Pin>`. `aria-label` carries the sentence; spans are `aria-hidden`. Start state CSS (`[data-scrub-word]`). |
+| `dev/TriggerCount` | `src/components/motion/dev/TriggerCount.tsx` | Live `ScrollTrigger.getAll().length` | — | Dev only (`/dev/motion`). Deleted in 21. |
+| `readCssPx()` | `src/components/motion/cssVars.ts` | Read a px token from `:root` (e.g. `--nav-h`) in client code | `name` | Keeps layout numbers single-sourced in `@theme`. |
 
 ## Scenes — `scenes/`
 

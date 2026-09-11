@@ -90,6 +90,32 @@ CSS mirrors for non-GSAP transitions: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)
 - Fonts loaded via `next/font` (no FOIT); reveals are safe to run at hydration because text is already sized.
 - Check with Chrome Performance panel while scrolling the whole page once before marking any scene done.
 
+## No flash on hydration (decided in feature 04)
+
+The HTML arrives visible; if GSAP hides an element after hydration and then reveals it,
+the visitor sees a flash. The fix is never `dynamic(..., { ssr: false })` — that removes
+the content from the HTML (LCP, SEO, no-JS). Instead:
+
+- A ~60-byte inline script in `layout.tsx` `<head>` sets `html[data-js]` **before first paint**.
+- Start states live in `globals.css` → `@layer components`, scoped to `html[data-js]`:
+  `[data-reveal]` (opacity 0; `wipe` gets the clip-path, `soft` the 16 px offset under
+  `no-preference`), `[data-scrub-word]` (opacity 0.3; 1 under `reduce`).
+- GSAP animates **to** the final state (`fromTo` with the same start values, so the
+  inline style matches the CSS). Without JS nothing is ever hidden.
+- Every new motion wrapper with a hidden start state follows this: add its `data-*`
+  attribute and CSS rule here first, then the tween.
+
+## Pinned scenes compose through `usePin()` (decided in feature 04)
+
+Scenes are Server Components and cannot hand callbacks to a client component, so `Pin`
+does not receive "what to animate": it creates the scene's single scrubbed timeline,
+attaches the one ScrollTrigger (`pin`, `pinSpacing: true`, `scrub: SCRUB.base`,
+`end: +=PIN.*%`), and publishes the timeline via context. Client children in `motion/`
+(`ScrubWords`, later `GradeWipe`, `StrokeDraw`) call `usePin()` and add their tweens with
+`ease: 'none'` inside their own `useGSAP`. React runs child effects first, so the tweens
+exist before the trigger is created. Under reduced motion `Pin` neither pins nor scrubs:
+`timeline.progress(1)`.
+
 ## Reduced motion (`prefers-reduced-motion: reduce`)
 
 - Lenis disabled → native scroll.

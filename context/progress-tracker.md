@@ -12,9 +12,9 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 1 — Foundation
-- **Last completed:** 03 Layout shell (2026-09-11) — Nav, Footer, Section, SkipLink, 404, metadata, sitemap (6 URLs), robots
+- **Last completed:** 04 Motion foundation (2026-09-12) — MotionProvider (GSAP + Lenis), Reveal, Pin/usePin, ScrubWords, bench at `/dev/motion`; browser checks (reduced motion toggle, trigger count 0 after unmount) pending the developer's pass
 - **In progress:** —
-- **Next:** 04 Motion foundation
+- **Next:** 05 Media primitives
 - **Blockers:** hero/project footage and the 9 prologue plates not yet sourced (see asset-pipeline.md → Placeholders / Prologue plates)
 - **⏸ HUMAN gates open:** none yet (features 01–06 need no human asset)
 
@@ -25,7 +25,7 @@ and next. Update after every completed feature. A feature is checked only after 
 - [x] 01 Scaffold, tokens, fonts
 - [x] 02 Content model + data files
 - [x] 03 Layout shell
-- [ ] 04 Motion foundation
+- [x] 04 Motion foundation
 - [ ] 05 Media primitives
 - [ ] 06 Analytics
 
@@ -91,6 +91,8 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-11 · Nav is one sticky bar from the top, `stuck` state (border + `bg-bg`) after 100 svh via IntersectionObserver · CSS cannot switch absolute→sticky mid-scroll; `fixed` is banned and a duplicate nav hurts a11y. Approved by the developer in the 03 plan.
 - 2026-09-11 · `Gutter` primitive not built · `Section` owns the gutter; nothing else needed it yet.
 - 2026-09-11 · Eyebrow / Mono-label class strings are inlined 4–5× and recorded as Patterns in `ui-registry.md` · promote to `ui/Eyebrow` + `ui/MonoLabel` when scene 07/08 needs them again — not before, to keep 03 small.
+- 2026-09-12 · Hydration flash solved with CSS start states under `html[data-js]`, not `dynamic({ ssr: false })` · the developer asked to fix the flash; removing content from the HTML would cost LCP/SEO/no-JS. See motion-rules → No flash.
+- 2026-09-12 · `gsap-skills` vendor skill not installed · official docs read directly; an external installer is not worth adding until a scene needs an API the notes lack.
 
 ## Notes
 

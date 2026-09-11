@@ -93,3 +93,32 @@
     outline-offset: 4px;
   }
 }
+
+@layer components {
+  /* Start states of the motion wrappers. Applied ONLY when JS is present — the inline
+     script in layout.tsx sets `html[data-js]` before first paint — so hydration never
+     flashes visible→hidden and visitors without JS see everything. GSAP animates TO the
+     final state (see Reveal.tsx, ScrubWords.tsx). */
+  html[data-js] [data-reveal] {
+    opacity: 0;
+  }
+  html[data-js] [data-scrub-word] {
+    opacity: 0.3;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-js] [data-reveal='wipe'] {
+      opacity: 1;
+      clip-path: inset(100% 0% 0% 0%);
+    }
+    html[data-js] [data-reveal='soft'] {
+      transform: translateY(16px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html[data-js] [data-scrub-word] {
+      opacity: 1;
+    }
+  }
+}

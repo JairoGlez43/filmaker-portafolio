@@ -3,6 +3,7 @@ import { Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import { Footer } from '@/components/layout/Footer';
 import { Nav } from '@/components/layout/Nav';
 import { SkipLink } from '@/components/layout/SkipLink';
+import { MotionProvider } from '@/components/motion/MotionProvider';
 import { getSite } from '@/lib/content';
 import { siteUrl } from '@/lib/url';
 import './globals.css';
@@ -19,6 +20,11 @@ const jetBrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
 });
+
+// Runs before first paint. Marks that JS is present so globals.css may apply the hidden
+// start states of motion wrappers (`html[data-js] [data-reveal]`): no flash on hydration,
+// and nothing is hidden for visitors without JavaScript.
+const JS_MARKER = "document.documentElement.dataset.js='';";
 
 const site = getSite();
 
@@ -41,11 +47,16 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={`${interTight.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: JS_MARKER }} />
+      </head>
       <body className="relative flex min-h-full flex-col">
-        <SkipLink />
-        <Nav name={site.name} />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <MotionProvider>
+          <SkipLink />
+          <Nav name={site.name} />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

@@ -88,6 +88,9 @@ Done: Toggle reduced motion in DevTools → Lenis off, scrubs become fades; no c
 warnings; unmount/remount (navigate away and back) leaves zero ScrollTriggers
 (`ScrollTrigger.getAll().length === 0`).
 Notes: This is the riskiest foundation item. Read `library-docs.md` GSAP + Lenis sections first.
+Built 2026-09-12: start states in CSS under `html[data-js]` (no hydration flash, see
+motion-rules), `Pin`/`usePin()` composition, Lenis published via `useSyncExternalStore`,
+Nav anchors routed through `lenis.scrollTo` on the home page. Bench at `/dev/motion`.
 
 ### 05 Media primitives
 

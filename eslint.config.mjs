@@ -25,6 +25,26 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  {
+    // Guardrail from architecture.md → Invariants: gsap and lenis are imported only by the
+    // motion and prologue components; scenes and layout use the wrappers.
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/components/motion/**', 'src/components/prologue/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['gsap', 'gsap/*', '@gsap/react', 'lenis', 'lenis/*'],
+              message:
+                'Animate through the wrappers in @/components/motion; gsap and lenis are imported only there.',
+            },
+          ],
+        },
+      ],
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

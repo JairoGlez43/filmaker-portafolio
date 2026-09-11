@@ -97,7 +97,9 @@ with `--color-*: initial` etc. so only project tokens produce utilities.
 `npx skills add https://github.com/greensock/gsap-skills` (core, timeline,
 scrolltrigger, react, performance modules). GSAP 3.13+ is fully free including all
 plugins; install from public npm, no `.npmrc`.
-**Version pinned:** gsap 3.13.x, @gsap/react 2.x — fill exact.
+**Version pinned:** gsap 3.15.0, @gsap/react 2.1.2 (installed 2026-09-12, feature 04).
+The vendor skill (`gsap-skills`) is NOT installed: the official docs were read directly
+for 04; install it only if a later scene needs an API these notes do not cover.
 **How we use it here:** only inside `src/components/motion/*`. Every tween/timeline
 is created within `useGSAP(() => {...}, { scope })` so cleanup is automatic. Reduced
 motion via `gsap.matchMedia()`. Scrubbed scenes use `ease: 'none'` + `scrub`.
@@ -138,10 +140,12 @@ useGSAP(
 ### Lenis
 
 **Check first:** `https://github.com/darkroomengineering/lenis` (README + `lenis/react` notes).
-**Version pinned:** 1.x — fill exact.
+**Version pinned:** lenis 1.3.26 (installed 2026-09-12, feature 04).
 **How we use it here:** one instance in `MotionProvider`, plain class (not the React
 wrapper, to keep the GSAP ticker as the single raf). Destroyed on unmount. Not created
-under reduced motion.
+under reduced motion (the OS setting is watched live, so toggling it tears Lenis down or
+brings it back). The instance is published with `useSyncExternalStore` (`useLenis()`),
+never with setState inside an effect. Official CSS via `import 'lenis/dist/lenis.css'`.
 **Canonical snippet:** `architecture.md` → Lenis + ScrollTrigger sync.
 **Gotchas:**
 
