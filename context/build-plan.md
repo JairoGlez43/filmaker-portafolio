@@ -74,7 +74,9 @@ UI: `Nav` (name left, `WORK` / `REEL` / `CONTACT` anchors right, mono), `Footer`
 Logic: `layout.tsx` with metadata defaults, `not-found.tsx`, `sitemap.ts`, `robots.ts`.
 Done: Nav anchors scroll to the right sections; 404 renders for `/nope`; sitemap
 lists `/` and every `/work/[slug]`.
-Notes: Nav is `position: absolute` over the hero, then `sticky` after 100 vh (not `fixed`, see ui-rules).
+Notes: Nav is one `sticky` bar from the top, transparent over the hero, `border-line` +
+`bg-bg` once past 100 vh (not `fixed`, see ui-rules). `Gutter` was not built: `Section`
+applies the gutter; add a `Gutter` primitive only when a non-section element needs it.
 
 ### 04 Motion foundation
 

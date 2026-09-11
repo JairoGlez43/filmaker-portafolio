@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter_Tight, JetBrains_Mono } from 'next/font/google';
+import { Footer } from '@/components/layout/Footer';
+import { Nav } from '@/components/layout/Nav';
+import { SkipLink } from '@/components/layout/SkipLink';
+import { getSite } from '@/lib/content';
+import { siteUrl } from '@/lib/url';
 import './globals.css';
 
 // One family for all text (display + body), one for labels. See ui-rules.md → Font.
@@ -15,9 +20,19 @@ const jetBrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+const site = getSite();
+
 export const metadata: Metadata = {
-  title: '{{FILMMAKER_NAME}}',
-  description: 'Portfolio of {{FILMMAKER_NAME}} — direction, edit, color.',
+  metadataBase: siteUrl(),
+  title: { default: site.name, template: `%s — ${site.name}` },
+  description: `Director, editor and colorist. Selected work, craft and showreel of ${site.name}, ${site.city}.`,
+  openGraph: {
+    type: 'website',
+    siteName: site.name,
+    images: [{ url: site.assets.ogDefault, width: 1200, height: 630, alt: site.name }],
+  },
+  twitter: { card: 'summary_large_image' },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
@@ -26,7 +41,12 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={`${interTight.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="relative flex min-h-full flex-col">
+        <SkipLink />
+        <Nav name={site.name} />
+        <div className="flex-1">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }

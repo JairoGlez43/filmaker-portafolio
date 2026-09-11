@@ -65,7 +65,7 @@ reelframe/
 │   │   ├── motion/               # 'use client' — MotionProvider, LenisProvider, Reveal, ScrubWords, GradeWipe, Marquee…
 │   │   ├── media/                # VideoLoop, LazyVimeo, Poster (client where they need refs)
 │   │   ├── ui/                   # Badge, MonoLabel, Eyebrow, Button, FocusRing… (presentational)
-│   │   └── layout/               # Nav, Footer, Gutter, Section
+│   │   └── layout/               # Nav, Footer, Section, SkipLink (Gutter deferred: Section owns the gutter)
 │   ├── data/
 │   │   ├── site.ts               # filmmaker identity + placeholders + VIMEO_REEL_ID
 │   │   ├── projects.ts           # Project[] — the whole portfolio
@@ -348,6 +348,7 @@ _Appended by the `architect` skill: date · decision · why._
 - 2026-09-11 · The project root is the git repo root; the existing `create-next-app` scaffold was reorganized into `src/` instead of regenerated · one root, one `package.json`, the GitHub remote already points here, and the scaffold was untouched default output.
 - 2026-09-11 · Tooling stays as close to framework defaults as possible · stock `eslint-config-next` flat config, no type-checked lint layer, no config the framework does not ship; deviations must earn their place with a concrete failure they prevent.
 - 2026-09-11 · One text family: Inter Tight for display and body, weights 600/400, no italic; JetBrains Mono for labels (provisional) · chosen by the developer on the `/dev/type` specimen against serif, extended and condensed candidates — coherence of a single voice, one font file for all text, and a neutral grotesque that never competes with the footage. The `--font-display` token is kept so the display face stays a one-line change.
+- 2026-09-11 · Nav: one `position: sticky` bar from the top with a `stuck` state after 100 svh (IntersectionObserver sentinel), never `fixed`, never duplicated · the spec's "absolute then sticky" has no CSS equivalent; the state still delivers what the spec wants seen (rule + background past the hero) and stays free of scroll listeners so Lenis/ScrollTrigger can own scrolling in 04.
 
 ## Invariants
 

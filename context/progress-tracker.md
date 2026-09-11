@@ -12,9 +12,9 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 1 — Foundation
-- **Last completed:** 02 Content model + data files (2026-09-11) — `pnpm content:check --allow-missing` green; 60 asset paths referenced, 0 present
+- **Last completed:** 03 Layout shell (2026-09-11) — Nav, Footer, Section, SkipLink, 404, metadata, sitemap (6 URLs), robots
 - **In progress:** —
-- **Next:** 03 Layout shell
+- **Next:** 04 Motion foundation
 - **Blockers:** hero/project footage and the 9 prologue plates not yet sourced (see asset-pipeline.md → Placeholders / Prologue plates)
 - **⏸ HUMAN gates open:** none yet (features 01–06 need no human asset)
 
@@ -24,7 +24,7 @@ and next. Update after every completed feature. A feature is checked only after 
 
 - [x] 01 Scaffold, tokens, fonts
 - [x] 02 Content model + data files
-- [ ] 03 Layout shell
+- [x] 03 Layout shell
 - [ ] 04 Motion foundation
 - [ ] 05 Media primitives
 - [ ] 06 Analytics
@@ -88,6 +88,9 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-11 · `content:check` separates structural errors from missing files, with `--allow-missing` for phases 1–2 · a check that passed with an empty `public/` would lie; one that always failed would be ignored. Missing files print as the ⏸ HUMAN deliverable list.
 - 2026-09-11 · `Site.assets` added to the data model (hero loop, reel poster, portrait, OG) · those assets belong to no project and needed a typed home for the check and the scenes.
 - 2026-09-11 · `/dev/content` is the one `src/` file that touches `node:fs` · it is a dev inspector deleted in 21, not part of the site.
+- 2026-09-11 · Nav is one sticky bar from the top, `stuck` state (border + `bg-bg`) after 100 svh via IntersectionObserver · CSS cannot switch absolute→sticky mid-scroll; `fixed` is banned and a duplicate nav hurts a11y. Approved by the developer in the 03 plan.
+- 2026-09-11 · `Gutter` primitive not built · `Section` owns the gutter; nothing else needed it yet.
+- 2026-09-11 · Eyebrow / Mono-label class strings are inlined 4–5× and recorded as Patterns in `ui-registry.md` · promote to `ui/Eyebrow` + `ui/MonoLabel` when scene 07/08 needs them again — not before, to keep 03 small.
 
 ## Notes
 

@@ -154,7 +154,7 @@ in the Statement or a title is weight 600 or the opacity change the scene alread
 | Component             | Spec                                                                                                                            |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | **Section**           | `px-gutter`, full-bleed by default; `max-w-[var(--container-max)] mx-auto` only for About and Credits                           |
-| **Nav**               | `h-[var(--nav-h)]`, mono, `text-text-muted`, hover → `text-text-primary`; bottom `border-line` appears only when sticky         |
+| **Nav**               | `h-(--nav-h)`, mono, `text-text-muted`, hover → `text-text-primary`; once past the hero (`stuck`) bottom `border-line` **and** `bg-bg` appear so text never floats over footage; transparent before |
 | **Work card**         | `h-screen sticky top-0`; video `object-cover opacity-70`; gradient `bg-gradient-to-t from-scrim`; text block `p-gutter pb-band` |
 | **Badge (role)**      | `font-mono text-mono-sm uppercase tracking-[0.12em] border border-line-strong rounded-sm px-2 py-1 text-text-muted`             |
 | **Play button**       | `size-16 rounded-full border border-text-primary`; hover `bg-accent-soft border-accent`; icon triangle `text-text-primary`      |

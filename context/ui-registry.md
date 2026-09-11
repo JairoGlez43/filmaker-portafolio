@@ -34,9 +34,12 @@ One line per component. Notes = the one thing a future session must know
 
 ## Components — `layout/`
 
-| Name    | Path | Purpose | Key props | Notes |
-| ------- | ---- | ------- | --------- | ----- |
-| _empty_ |      |         |           |       |
+| Name | Path | Purpose | Key props | Notes |
+| --- | --- | --- | --- | --- |
+| `Section` | `src/components/layout/Section.tsx` | Scene wrapper: `<section id>` + the scene's one `<h2>`, `px-gutter` full-bleed | `id`, `label`, `heading: 'eyebrow' \| 'hidden'` (default hidden), `contained` (About/Credits only), `className` | Server component. `aria-labelledby` wired to the h2. Anchor target for Nav links. |
+| `Nav` | `src/components/layout/Nav.tsx` | Sticky primary nav: name left, `WORK · REEL · CONTACT` right | `name: string` | **Client** (IntersectionObserver on a 100 svh sentinel → `stuck`: `border-line` + `bg-bg`). Sticky from the top, not absolute→sticky. Links are hash anchors until Lenis (04) takes `scrollTo`. Needs `body.relative`. |
+| `SkipLink` | `src/components/layout/SkipLink.tsx` | `SKIP TO WORK`, first focusable on every page | — | `sr-only` until `focus-visible`. Must stay the first child of `<body>`. |
+| `Footer` | `src/components/layout/Footer.tsx` | Colophon: © year name · Site by dev · type credit | — | Server component; reads `getSite()`. Year computed at build. Links `text-muted` by default here (ui-rules). |
 
 ## Components — `media/` (video, embeds, images)
 
@@ -61,6 +64,11 @@ One line per component. Notes = the one thing a future session must know
 _Reusable layouts and compositions (e.g. "text in bottom band over dimmed video",
 "two-column mono table"). Added as they emerge, with a pointer to the first file that
 uses them._
+
+- **Eyebrow** (`font-mono text-mono-sm tracking-[0.12em] text-text-faint uppercase`) — first in `Section.tsx` (heading="eyebrow"); also `not-found.tsx`, `page.tsx`. Promote to `ui/Eyebrow.tsx` the moment scene 07/08 needs it a fourth time.
+- **Mono label** (`font-mono text-mono tracking-[0.06em] text-text-muted uppercase`) — first in `Nav.tsx` links; also `Footer.tsx`, `SkipLink.tsx`, `not-found.tsx`. Same promotion rule → `ui/MonoLabel.tsx`.
+- **Mono link hover** (`transition-colors duration-(--dur-fast) ease-out hover:text-text-primary focus-visible:text-text-primary motion-reduce:transition-none`) — `Nav.tsx`, `Footer.tsx`. Reduced motion handled by the Tailwind `motion-reduce:` variant, no custom class.
+- **Missing-reel card** (`bg-surface rounded-sm p-8 md:p-12 max-w-[65ch]`) — `not-found.tsx`. The only card surface so far.
 
 ## Deprecated
 

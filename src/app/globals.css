@@ -72,6 +72,9 @@
 @layer base {
   html {
     color-scheme: dark;
+    /* Hash anchors land below the sticky nav. No `scroll-behavior: smooth`: Lenis owns
+       smoothing from feature 04 (motion-rules → Scroll rules). */
+    scroll-padding-top: var(--nav-h);
   }
 
   body {

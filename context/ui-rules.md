@@ -29,8 +29,10 @@ Two families, loaded once in `src/app/layout.tsx` with `next/font/google`
   (exceptions: play button, title card).
 - **Vertical rhythm:** pinned/stacked scenes have no gap; flowing scenes are separated
   by `gap-section`.
-- **Nav:** absolute over the hero, sticky with `border-line` after 100 vh. Height
-  `--nav-h`. Three anchors max.
+- **Nav:** one `position: sticky` bar from the top of the page (never `fixed`, never
+  duplicated). Transparent over the hero; after 100 vh (`stuck`, via an
+  IntersectionObserver sentinel) it gains `border-line` and `bg-bg`. Height `--nav-h`.
+  Three anchors max. Decided in feature 03: CSS cannot switch absolute→sticky mid-scroll.
 - **No sidebar, no hamburger.** Mobile nav is the same three mono words, smaller.
 - **Breakpoints:** mobile-first; `md` (768) switches two-column layouts; `lg` (1024)
   widens gutters. Design at 390 px and 1440 px, check 320 and 1920.
