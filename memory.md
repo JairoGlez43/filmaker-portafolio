@@ -10,6 +10,8 @@
 
 _Cause → fix. Only things that cost real time. One line each, newest first._
 
+- 2026-09-12 · Next 16 `next/image` only serves the qualities listed in `images.qualities` (default `[75]`) → never pass a `quality` prop unless the config allows it.
+- 2026-09-12 · A pre-hydration inline script that sets an attribute on `<html>` (`data-js`) triggers "attributes of the server rendered HTML didn't match" → `suppressHydrationWarning` on `<html>` only (the next-themes pattern); never on children.
 - 2026-09-12 · `eslint-config-next` 16 ships the React Compiler rule `react-hooks/set-state-in-effect`: a `setState` directly in an effect body fails lint → publish external instances (Lenis, observers) with `useSyncExternalStore`, keep effects for side effects only.
 - 2026-09-12 · GSAP `from()` on an element whose start state is already set by CSS reads the hidden value as the *end* → always `fromTo()` with explicit start values when the CSS defines the start state.
 - 2026-09-11 · Node warns `MODULE_TYPELESS_PACKAGE_JSON` when a `.mjs` script imports `.ts` data files → `"type": "module"` in `package.json`; Next 16, tsc and ESLint are all fine with it.

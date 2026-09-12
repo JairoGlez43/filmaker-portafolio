@@ -76,7 +76,9 @@ CSS mirrors for non-GSAP transitions: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)
 
 ## Video motion
 
-- Loops play/pause via ScrollTrigger `onEnter`/`onLeave`/`onEnterBack`/`onLeaveBack`.
+- Loops play/pause via an IntersectionObserver band (enter at 80 % of the viewport, leave at
+  20 %) inside `VideoLoop`, not via ScrollTrigger: video lifecycle is not an animation, and
+  `gsap` stays out of `media/` (decided in feature 05; the lint guard enforces it).
 - `play()` returns a promise — always `.catch()` it (autoplay may be blocked).
 - Dim loops to 70% opacity behind text; un-dim on hover only for pointer devices (`@media (hover: hover)`).
 - Never scrub video `currentTime` with scroll (janky on iOS, heavy decode). The grade wipe uses two stills, not video.
@@ -97,6 +99,8 @@ the visitor sees a flash. The fix is never `dynamic(..., { ssr: false })` — th
 the content from the HTML (LCP, SEO, no-JS). Instead:
 
 - A ~60-byte inline script in `layout.tsx` `<head>` sets `html[data-js]` **before first paint**.
+  `<html>` carries `suppressHydrationWarning` for exactly this attribute (React would
+  otherwise report a server/client attribute mismatch); it applies to that element only.
 - Start states live in `globals.css` → `@layer components`, scoped to `html[data-js]`:
   `[data-reveal]` (opacity 0; `wipe` gets the clip-path, `soft` the 16 px offset under
   `no-preference`), `[data-scrub-word]` (opacity 0.3; 1 under `reduce`).

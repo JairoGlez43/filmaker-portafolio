@@ -69,7 +69,7 @@ Package manager is **pnpm** only.
 - `'use client'` only in `src/components/motion/*`, `src/components/prologue/*` and interactive leaf components. Pages and sections stay Server Components.
 - Every GSAP/Lenis instance is created inside `useGSAP` or a `useEffect` with cleanup. No global leaks.
 - Every animation respects `prefers-reduced-motion` via `gsap.matchMedia()`.
-- Every `<video>` has a poster, `muted`, `playsInline`, `preload="metadata"` and is ≤ the size limits in `asset-pipeline.md`.
+- Every loop goes through `VideoLoop`: a `next/image` poster is always visible first, the `<video>` is `muted`, `playsInline`, `loop`, `preload="metadata"`, `aria-hidden`, registered for the ≤ 2 decode budget, and its files are ≤ the size limits in `asset-pipeline.md`. Never a bare `<video>`.
 - Never install a package without checking `code-standards.md` → Approved dependencies. Ask first.
 - Real footage must be visible within 5 s of landing (`experience-script.md`). No change to scenes 00–01 may break this.
 - Never invent a placeholder client fact (name, awards, clients). Use the `{{PLACEHOLDER}}` values in `src/data/site.ts` and leave them visibly generic.

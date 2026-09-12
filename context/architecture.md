@@ -110,8 +110,9 @@ Scroll → motion
   wheel/touch ──▶ Lenis (raf) ──▶ ScrollTrigger.update() ──▶ scrubbed timelines ──▶ transform/opacity only
 
 Video loop lifecycle
-  IntersectionObserver (near viewport) ──▶ set <source src> ──▶ ScrollTrigger onEnter play() / onLeave pause()
-                                                             └──▶ max 2 playing (VideoLoop registry in motion/)
+  IntersectionObserver (±videoLoadMarginPx) ──▶ set <source src>, load()
+  IntersectionObserver (central 60 % band)  ──▶ requestPlay() / release()  ──▶ max 2 decoding (media/videoRegistry.ts)
+  <video> 'playing' event ──▶ cross-fade over the next/image poster · not rendered under reduced motion/data
 
 Prologue (v1 DOM)
   scroll ──▶ ScrollTrigger (pin 250vh, scrub) ──▶ per-plate transform/opacity ──▶ un-pin ──▶ Opening.play()
@@ -288,13 +289,19 @@ Disabled entirely under `prefers-reduced-motion: reduce` (native scroll).
 **Video loop element (canonical attributes):**
 
 ```tsx
-<video muted playsInline loop preload="metadata" poster={poster} aria-hidden="true">
-  <source data-src={webm} type="video/webm" />
-  <source data-src={mp4} type="video/mp4" />
-</video>
+<div className="relative overflow-hidden bg-surface">
+  <Image src={poster} alt="" fill sizes={sizes} className="object-cover" />   {/* the loading state and LCP */}
+  <video muted playsInline loop preload="metadata" aria-hidden="true"
+         className={playing ? 'opacity-100' : 'opacity-0'}>                 {/* cross-fades in on 'playing' */}
+    <source data-src={webm} type="video/webm" />
+    <source data-src={mp4} type="video/mp4" />
+  </video>
+</div>
 ```
 
-`data-src` → `src` is set by `VideoLoop` when within 1 viewport of the screen.
+`data-src` → `src` is set by `VideoLoop` when within `LIMITS.videoLoadMarginPx` of the
+screen. The poster is the optimized `next/image`, not the `<video poster>` attribute, so
+the frame is never downloaded twice.
 
 **Frame sequence on canvas (Phase 5, canonical core):**
 
@@ -351,6 +358,8 @@ _Appended by the `architect` skill: date · decision · why._
 - 2026-09-11 · Nav: one `position: sticky` bar from the top with a `stuck` state after 100 svh (IntersectionObserver sentinel), never `fixed`, never duplicated · the spec's "absolute then sticky" has no CSS equivalent; the state still delivers what the spec wants seen (rule + background past the hero) and stays free of scroll listeners so Lenis/ScrollTrigger can own scrolling in 04.
 - 2026-09-12 · Motion start states live in CSS scoped to `html[data-js]` (inline marker script before first paint), GSAP animates to the final state · kills the hydration flash without removing content from the HTML; `dynamic({ ssr: false })` was rejected because it would break LCP, SEO and no-JS rendering.
 - 2026-09-12 · `Pin` publishes its scrubbed timeline through context; client children add tweens with `usePin()` · Server Component scenes cannot pass callbacks; this keeps one pin + one timeline + one ScrollTrigger per scene and lets `GradeWipe`/`StrokeDraw` plug in later without touching `Pin`.
+- 2026-09-12 · Video lifecycle (load near viewport, play/pause in the central band, ≤ 2 decoding) runs on IntersectionObservers in `media/`, not on ScrollTrigger · a video is not an animation; keeps `gsap` out of `media/` (lint-enforced) and the loops working even if motion is disabled.
+- 2026-09-12 · The visible poster is a `next/image`; the `<video>` cross-fades in on `playing` and is not rendered under reduced motion/data · optimized formats + `sizes` for the LCP frame, no duplicate poster download, honest poster-only variant.
 - 2026-09-12 · External instances (Lenis) are exposed with `useSyncExternalStore`, never `setState` inside an effect · required by the React Compiler lint (`react-hooks/set-state-in-effect`) and the honest model: Lenis is an external system, not React state.
 
 ## Invariants

@@ -101,6 +101,10 @@ Logic: IntersectionObserver-driven `src` assignment, playing-count registry (max
 Done: With 6 loops on the dev page, Network tab shows only near-viewport ones
 loading; never > 2 playing; Vimeo iframe absent from DOM until click.
 Notes: Test on real iOS Safari (autoplay policies) before marking done.
+Built 2026-09-12: poster is a `next/image` under a transparent `<video>` (cross-fade on
+`playing`), lifecycle via two IntersectionObservers (no GSAP in `media/`), decode budget
+in `media/videoRegistry.ts`, `<video>` not rendered under reduced motion/data. Bench at
+`/dev/media`. iOS Safari check pending — the developer has no iPhone at hand; not faked.
 
 ### 06 Analytics
 

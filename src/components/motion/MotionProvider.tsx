@@ -7,6 +7,7 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { useEffect, useSyncExternalStore, type ReactNode } from 'react';
 import { REDUCED_MOTION_QUERY } from '@/lib/motion';
+import { useMediaQuery } from './useMediaQuery';
 
 // Registered once for the whole app; every other motion component relies on this.
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -37,21 +38,6 @@ export function useLenis(): Lenis | null {
   );
 }
 
-function subscribeReducedMotion(notify: () => void) {
-  const query = window.matchMedia(REDUCED_MOTION_QUERY);
-  query.addEventListener('change', notify);
-  return () => query.removeEventListener('change', notify);
-}
-
-/** Live OS setting; null on the server. Toggling it in DevTools re-renders consumers. */
-function useReducedMotion(): boolean | null {
-  return useSyncExternalStore(
-    subscribeReducedMotion,
-    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
-    () => null,
-  );
-}
-
 // ── Provider ────────────────────────────────────────────────────────────────
 
 /**
@@ -61,7 +47,7 @@ function useReducedMotion(): boolean | null {
  * changes while the page is open. Wrapped around the whole body in layout.tsx.
  */
 export function MotionProvider({ children }: { children: ReactNode }) {
-  const reduced = useReducedMotion();
+  const reduced = useMediaQuery(REDUCED_MOTION_QUERY);
 
   useEffect(() => {
     if (reduced !== false) return;

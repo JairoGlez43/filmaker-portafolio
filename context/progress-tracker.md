@@ -12,9 +12,9 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 1 — Foundation
-- **Last completed:** 04 Motion foundation (2026-09-12) — MotionProvider (GSAP + Lenis), Reveal, Pin/usePin, ScrubWords, bench at `/dev/motion`; browser checks (reduced motion toggle, trigger count 0 after unmount) pending the developer's pass
+- **Last completed:** 05 Media primitives (2026-09-12) — VideoLoop + videoRegistry, LazyVimeo, Lightbox, bench at `/dev/media`; **iOS Safari autoplay check pending** (no device at hand)
 - **In progress:** —
-- **Next:** 05 Media primitives
+- **Next:** 06 Analytics
 - **Blockers:** hero/project footage and the 9 prologue plates not yet sourced (see asset-pipeline.md → Placeholders / Prologue plates)
 - **⏸ HUMAN gates open:** none yet (features 01–06 need no human asset)
 
@@ -26,7 +26,7 @@ and next. Update after every completed feature. A feature is checked only after 
 - [x] 02 Content model + data files
 - [x] 03 Layout shell
 - [x] 04 Motion foundation
-- [ ] 05 Media primitives
+- [x] 05 Media primitives (iOS Safari check outstanding)
 - [ ] 06 Analytics
 
 ### Phase 2 — The film (`/`)
@@ -93,6 +93,9 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-11 · Eyebrow / Mono-label class strings are inlined 4–5× and recorded as Patterns in `ui-registry.md` · promote to `ui/Eyebrow` + `ui/MonoLabel` when scene 07/08 needs them again — not before, to keep 03 small.
 - 2026-09-12 · Hydration flash solved with CSS start states under `html[data-js]`, not `dynamic({ ssr: false })` · the developer asked to fix the flash; removing content from the HTML would cost LCP/SEO/no-JS. See motion-rules → No flash.
 - 2026-09-12 · `gsap-skills` vendor skill not installed · official docs read directly; an external installer is not worth adding until a scene needs an API the notes lack.
+- 2026-09-12 · Video lifecycle on IntersectionObservers, not ScrollTrigger; poster is a `next/image` under a transparent `<video>` · see architecture decisions. The `<video>` is not rendered under reduced motion or reduced data.
+- 2026-09-12 · Demo assets: one 576p clip for hero + all 5 slugs, 4 stills on `northern-light`, Vimeo id `1084537` (Big Buck Bunny) · enough to exercise every media primitive; all to be replaced by footage the developer shoots.
+- 2026-09-12 · Stills limit redefined as ≤ 2400 px on the longest side (`--max`), not width · a 9:16 frame capped by width alone is 10 MP and cannot meet 400 KB.
 
 ## Notes
 

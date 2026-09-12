@@ -43,9 +43,12 @@ One line per component. Notes = the one thing a future session must know
 
 ## Components — `media/` (video, embeds, images)
 
-| Name    | Path | Purpose | Key props | Notes |
-| ------- | ---- | ------- | --------- | ----- |
-| _empty_ |      |         |           |       |
+| Name | Path | Purpose | Key props | Notes |
+| --- | --- | --- | --- | --- |
+| `VideoLoop` | `src/components/media/VideoLoop.tsx` | Muted loop: `next/image` poster underneath, `<video>` cross-fades in when playing | `loop: Loop`, `slug`, `sizes` (always pass), `priority` (hero only), `dim` (70 %), `className` (give it an aspect ratio) | **Client.** Sources attach within `LIMITS.videoLoadMarginPx`; plays in the central 60 % band; ≤ `LIMITS.maxPlayingVideos` via `videoRegistry`. No `<video>` at all under reduced motion **or** reduced data. No GSAP. |
+| `videoRegistry` | `src/components/media/videoRegistry.ts` | Decode budget: `requestPlay`, `release`, `usePlayingCount` | — | Module store + `useSyncExternalStore`. Pauses the oldest loop when the budget is full; logs `[media/VideoLoop] play failed: <slug>`. |
+| `LazyVimeo` | `src/components/media/LazyVimeo.tsx` | Poster + 64 px play → Vimeo iframe only after click | `vimeoId` (`id` or `id?h=hash`), `title`, `poster \| null`, `sizes`, `muted`, `label`, `className` | **Client.** `dnt=1` always; `Escape`/`CLOSE ×` unmount; focus returns to play. `poster: null` renders the `bg-surface` block (honest missing state). `reel_play` tracking arrives in 06. |
+| `Lightbox` | `src/components/media/Lightbox.tsx` | Native `<dialog>` for one still | `still: Still \| null`, `onClose` | **Client.** State lives in the gallery. `showModal()`; backdrop click + Escape close; browser restores focus; `lenis.stop()/start()` while open. `next/image` with the still's width/height, `sizes="90vw"`. |
 
 ## Components — `motion/` (client wrappers)
 
@@ -57,6 +60,7 @@ One line per component. Notes = the one thing a future session must know
 | `ScrubWords` | `src/components/motion/ScrubWords.tsx` | Words faint → primary as the pin scrubs; last word `accent` in the final 10 % | `text` (≤ 20 words), `className` | Must be inside `<Pin>`. `aria-label` carries the sentence; spans are `aria-hidden`. Start state CSS (`[data-scrub-word]`). |
 | `dev/TriggerCount` | `src/components/motion/dev/TriggerCount.tsx` | Live `ScrollTrigger.getAll().length` | — | Dev only (`/dev/motion`). Deleted in 21. |
 | `readCssPx()` | `src/components/motion/cssVars.ts` | Read a px token from `:root` (e.g. `--nav-h`) in client code | `name` | Keeps layout numbers single-sourced in `@theme`. |
+| `useMediaQuery()` | `src/components/motion/useMediaQuery.ts` | Live `matchMedia` as an external store | `query` | `true`/`false` on the client, `null` during SSR/hydration. Used by `MotionProvider` (reduced motion) and `VideoLoop` (reduced motion + reduced data). |
 
 ## Scenes — `scenes/`
 

@@ -46,6 +46,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
     <html
       lang="en"
       className={`${interTight.variable} ${jetBrainsMono.variable} h-full antialiased`}
+      // The JS_MARKER script adds `data-js` (and Lenis later adds its classes) to <html>
+      // before/after hydration; React would flag the attribute mismatch. Same fix as theme
+      // scripts: suppress on this one element only — children stay fully checked.
+      suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: JS_MARKER }} />
