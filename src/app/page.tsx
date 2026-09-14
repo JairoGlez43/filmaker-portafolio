@@ -1,5 +1,6 @@
 import { Section } from '@/components/layout/Section';
 import { Opening } from '@/components/scenes/01-Opening';
+import { Statement } from '@/components/scenes/02-Statement';
 
 /**
  * The film. Scenes are composed here in script order (experience-script.md → Scene index).
@@ -17,6 +18,7 @@ export default function Home() {
   return (
     <>
       <Opening />
+      <Statement />
 
       {PLACEHOLDER_SCENES.map((scene) => (
         <Section

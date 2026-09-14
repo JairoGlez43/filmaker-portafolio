@@ -150,6 +150,8 @@ UI: Pinned sentence, words light up, last word turns `accent`.
 Logic: `ScrubWords` splitting on spaces (no SplitText needed), pin 150 vh.
 Done: ≤ 4 lines at 320 px; pin/unpin has no jump; reduced-motion shows lit sentence.
 Notes: ⏸ HUMAN: the sentence itself (Script chat). Build with the placeholder.
+Built 2026-09-14: `scenes/02-Statement` composes `Section` › `Pin` › `ScrubWords`; no
+new code in motion/. Swap the sentence in `site.ts` when the developer writes his own.
 
 ### 10 Scene 03 Selected Work
 

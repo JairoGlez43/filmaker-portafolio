@@ -12,9 +12,9 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 2 — The film (`/`) — Phase 1 complete 2026-09-12
-- **Last completed:** 08 Scene 01 Opening (2026-09-12) — hero loop + name reveal + meta + scroll cue + push-in/dim/parallax exit, on the demo 576p hero. Open checks: LCP ≤ 2.5 s on Vercel mobile, iOS autoplay, prologue hand-off (when 07 exists)
+- **Last completed:** 09 Scene 02 Statement (2026-09-14) — `Section` › `Pin` 150 vh › `ScrubWords` with the script's placeholder sentence. Open check: ≤ 4 lines at 320 px in the browser
 - **In progress:** —
-- **Next:** 09 Scene 02 Statement (07 Prologue waits for the developer's own plates — he starts Blender on 2026-09-13)
+- **Next:** 10 Scene 03 Selected Work (07 Prologue waits for the developer's own plates — Blender work in progress)
 - **Blockers:** `NEXT_PUBLIC_SITE_URL` not set in Vercel (production sitemap lists localhost) · iOS Safari autoplay check for 05 outstanding
 - **⏸ HUMAN gates open:** 07 needs the 9 prologue plates (`public/img/prologue/plate-01…09.jpg`, same grade family as the hero poster); demo hero loop/poster exist but are 576p — see Asset status
 
@@ -33,7 +33,7 @@ and next. Update after every completed feature. A feature is checked only after 
 
 - [ ] 07 Scene 00 Prologue — DOM version (v1)
 - [x] 08 Scene 01 Opening (built 2026-09-12 on the demo hero; LCP/iOS/hand-off checks open)
-- [ ] 09 Scene 02 Statement
+- [x] 09 Scene 02 Statement (placeholder sentence; 320 px line-count check in the browser)
 - [ ] 10 Scene 03 Selected Work
 - [ ] 11 Scene 04 Craft — Direction & Edit
 - [ ] 12 Scene 04 Craft — Color (grade wipe)

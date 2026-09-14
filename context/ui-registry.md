@@ -67,6 +67,7 @@ One line per component. Notes = the one thing a future session must know
 
 | Scene | Path | Composes | Assets | Notes |
 | --- | --- | --- | --- | --- |
+| 02 Statement | `src/components/scenes/02-Statement.tsx` | `Section` (hidden h2) › `Pin` 150 vh › `ScrubWords` (`site.statement`, `text-display`, `max-w-[20ch]`) | none | No gap before/after (pinned). Reduced: no pin, sentence lit. Sentence is the script's placeholder until the developer writes his. |
 | 01 Opening | `src/components/scenes/01-Opening.tsx` | `OpeningExit` › `VideoLoop` (hero, `priority`) + `Reveal` wipe (`h1` name) + `Reveal` soft (meta, `delay={DUR.base}`) + `ScrollCue` | `site.assets.heroLoop` (demo 576p — replace) | `<section id="opening">`, `-mt-(--nav-h)`, `overflow-hidden`. Text in the bottom band over a `from-scrim` gradient; cue bottom-right. Prologue (07) hands off into this section. |
 
 ## Patterns
