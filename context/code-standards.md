@@ -75,8 +75,9 @@ Before installing anything, ask:
   `next/font` usage, `ImageResponse` import path.
 - **Server Components by default.** A file gets `'use client'` only if it uses refs,
   effects, state, or browser APIs. Allowed client folders: `components/motion/*`,
-  `components/media/*`, `Lightbox`, `Nav` (scroll state). Anything else needing
-  `'use client'` is a design smell — raise it.
+  `components/media/*`, `components/prologue/*`, `Lightbox`, `Nav` (scroll state), and
+  the interactive leaf `ui/TrackLink` (a link that fires one analytics event; no state).
+  Anything else needing `'use client'` is a design smell — raise it.
 - **Static only.** No `dynamic = 'force-dynamic'`, no `revalidate`, no server actions,
   no route handlers, no middleware in v1.
 - **Data access** is compile-time: import from `@/lib/content` in Server Components.

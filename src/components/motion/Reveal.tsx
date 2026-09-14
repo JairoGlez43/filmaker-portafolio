@@ -10,6 +10,8 @@ type RevealProps = {
   variant?: 'wipe' | 'soft';
   /** Seconds after the trigger fires — a `STAGGER.*` or `DUR.*` value, for "X appears after Y". */
   delay?: number;
+  /** ScrollTrigger start; default `REVEAL_START` (`top 85%`). Cards use `top 60%`. */
+  start?: string;
   className?: string;
   children: ReactNode;
 };
@@ -24,7 +26,13 @@ const WIPE_TO = 'inset(0% 0% 0% 0%)';
  * globals.css), applied before first paint by the inline script in layout.tsx. GSAP only
  * animates TO the final state. Without JS nothing is hidden.
  */
-export function Reveal({ variant = 'wipe', delay = 0, className = '', children }: RevealProps) {
+export function Reveal({
+  variant = 'wipe',
+  delay = 0,
+  start = REVEAL_START,
+  className = '',
+  children,
+}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -32,7 +40,7 @@ export function Reveal({ variant = 'wipe', delay = 0, className = '', children }
       const el = ref.current;
       if (!el) return;
       const mm = gsap.matchMedia();
-      const scrollTrigger = { trigger: el, start: REVEAL_START, once: true };
+      const scrollTrigger = { trigger: el, start, once: true };
 
       mm.add(FULL_MOTION_QUERY, () => {
         if (variant === 'wipe') {
@@ -54,7 +62,7 @@ export function Reveal({ variant = 'wipe', delay = 0, className = '', children }
         gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: DUR.fast, delay, scrollTrigger });
       });
     },
-    { scope: ref, dependencies: [variant, delay] },
+    { scope: ref, dependencies: [variant, delay, start] },
   );
 
   return (

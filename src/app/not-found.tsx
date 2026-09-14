@@ -1,13 +1,12 @@
 import Link from 'next/link';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 
 /** The "missing reel" card (ui-rules → States → Not found). Root not-found also catches every unmatched URL. */
 export default function NotFound() {
   return (
     <main className="px-gutter py-section flex min-h-svh items-center">
       <div className="bg-surface flex w-full max-w-[65ch] flex-col gap-6 rounded-sm p-8 md:p-12">
-        <p className="text-mono-sm text-text-faint font-mono tracking-[0.12em] uppercase">
-          404 · Missing reel
-        </p>
+        <Eyebrow>404 · Missing reel</Eyebrow>
         <h1 className="font-display text-display text-text-primary leading-[1] tracking-[-0.01em]">
           This reel is not in the archive.
         </h1>

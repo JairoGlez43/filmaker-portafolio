@@ -10,6 +10,7 @@ type Events = {
 };
 
 export type EventName = keyof Events;
+export type EventProps<K extends EventName> = Events[K];
 
 /**
  * Typed wrapper around Vercel Web Analytics custom events. Outside production the event

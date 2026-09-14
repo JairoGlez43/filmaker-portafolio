@@ -159,6 +159,10 @@ UI: Sticky stack-and-cover cards, index, title, badges, hover un-dim.
 Logic: Cards from `getProjects()`, `VideoLoop` per card, links to `/work/[slug]`.
 Done: Scene video ≤ 15 MB total; only in-view loops load; keyboard focus visible on every card; `work_open` fires on click.
 Notes: ⏸ HUMAN: 4–6 project loops + posters + titles/clients/years/roles.
+Built 2026-09-14: `scenes/03-SelectedWork` + `parts/StickyStack` (pure CSS, no GSAP) +
+`parts/WorkCard`; `Eyebrow`/`MonoLabel`/`Badge` promoted to `ui/`; `ui/TrackLink` client
+leaf for `work_open`; `Reveal` gained `start`, `Section` gained `bleed`. Runs on the five
+demo loops (one clip); cards 404 until feature 17.
 
 ### 11 Scene 04 Craft — Direction & Edit beats
 

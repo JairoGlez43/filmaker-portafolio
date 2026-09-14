@@ -1,6 +1,8 @@
 import { Section } from '@/components/layout/Section';
 import { Opening } from '@/components/scenes/01-Opening';
 import { Statement } from '@/components/scenes/02-Statement';
+import { SelectedWork } from '@/components/scenes/03-SelectedWork';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 
 /**
  * The film. Scenes are composed here in script order (experience-script.md → Scene index).
@@ -9,7 +11,6 @@ import { Statement } from '@/components/scenes/02-Statement';
  * arrive.
  */
 const PLACEHOLDER_SCENES = [
-  { id: 'work', label: 'Selected work', arrives: '10' },
   { id: 'reel', label: 'Showreel', arrives: '13' },
   { id: 'contact', label: 'Contact', arrives: '16' },
 ] as const;
@@ -19,6 +20,7 @@ export default function Home() {
     <>
       <Opening />
       <Statement />
+      <SelectedWork />
 
       {PLACEHOLDER_SCENES.map((scene) => (
         <Section
@@ -28,9 +30,7 @@ export default function Home() {
           heading="eyebrow"
           className="border-line flex min-h-svh flex-col justify-center gap-4 border-t"
         >
-          <p className="text-mono-sm text-text-faint font-mono tracking-[0.12em] uppercase">
-            Placeholder — scene arrives in feature {scene.arrives}
-          </p>
+          <Eyebrow>Placeholder — scene arrives in feature {scene.arrives}</Eyebrow>
         </Section>
       ))}
     </>

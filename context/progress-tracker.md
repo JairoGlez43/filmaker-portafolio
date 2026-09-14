@@ -12,9 +12,9 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 2 — The film (`/`) — Phase 1 complete 2026-09-12
-- **Last completed:** 09 Scene 02 Statement (2026-09-14) — `Section` › `Pin` 150 vh › `ScrubWords` with the script's placeholder sentence. Open check: ≤ 4 lines at 320 px in the browser
+- **Last completed:** 10 Scene 03 Selected Work (2026-09-14) — sticky stack of 5 cards on the demo loops, `work_open` wired; `Eyebrow`/`MonoLabel`/`Badge`/`TrackLink` in `ui/`. Open checks in the browser: title wipe on sticky cards, ≤ 2 loops decoding while scrolling the stack
 - **In progress:** —
-- **Next:** 10 Scene 03 Selected Work (07 Prologue waits for the developer's own plates — Blender work in progress)
+- **Next:** 13 Scene 05 Showreel, then 14 Clients marquee (decided 2026-09-14: 11–12 Craft deferred with 07 until the developer's assets exist — direction still, storyboard SVG, 6 contact-sheet frames, log/grade pair, 9 plates)
 - **Blockers:** `NEXT_PUBLIC_SITE_URL` not set in Vercel (production sitemap lists localhost) · iOS Safari autoplay check for 05 outstanding
 - **⏸ HUMAN gates open:** 07 needs the 9 prologue plates (`public/img/prologue/plate-01…09.jpg`, same grade family as the hero poster); demo hero loop/poster exist but are 576p — see Asset status
 
@@ -34,7 +34,7 @@ and next. Update after every completed feature. A feature is checked only after 
 - [ ] 07 Scene 00 Prologue — DOM version (v1)
 - [x] 08 Scene 01 Opening (built 2026-09-12 on the demo hero; LCP/iOS/hand-off checks open)
 - [x] 09 Scene 02 Statement (placeholder sentence; 320 px line-count check in the browser)
-- [ ] 10 Scene 03 Selected Work
+- [x] 10 Scene 03 Selected Work (demo loops; cards 404 until 17)
 - [ ] 11 Scene 04 Craft — Direction & Edit
 - [ ] 12 Scene 04 Craft — Color (grade wipe)
 - [ ] 13 Scene 05 Showreel
@@ -98,6 +98,9 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-12 · Stills limit redefined as ≤ 2400 px on the longest side (`--max`), not width · a 9:16 frame capped by width alone is 10 MP and cannot meet 400 KB.
 - 2026-09-12 · Phase 2 starts with 08 (Opening), 07 (Prologue) deferred until the developer's own plates exist · 08 only needs the demo hero; 07 built on placeholder crops would be throwaway.
 - 2026-09-12 · Scene 01 exit is one scene-specific wrapper (`OpeningExit`) rather than generic `Parallax` + `ScaleIn` · both layers ride the same scroll; one timeline, one ScrollTrigger. A generic `Parallax` is created the day a second scene (About, 0.85) needs it.
+- 2026-09-14 · `StickyStack` is pure CSS in `scenes/parts/`, not a GSAP wrapper in `motion/` · stack-and-cover is `position: sticky`; no JS, works under reduced motion, nothing to clean up.
+- 2026-09-14 · `ui/TrackLink` is the one `'use client'` leaf in `ui/` · Server Component scenes cannot call `track()` on click; a stateless link wrapper is the smallest honest client boundary. Added to the allowed list in code-standards.
+- 2026-09-14 · `Eyebrow`, `MonoLabel`, `Badge` promoted to `ui/` at the 4th use, as the registry rule said · `Nav`/`Footer`/`SkipLink` keep inline classes (link states).
 - 2026-09-12 · Analytics built as specified although Vercel custom events require a Pro plan · the code is identical on every plan; page views work on Hobby; the three events are emitted and become visible the day the plan allows it. `track()` also logs to the console outside production so the wiring is verifiable locally.
 
 ## Notes

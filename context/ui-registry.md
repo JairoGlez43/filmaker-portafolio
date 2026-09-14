@@ -31,12 +31,16 @@ One line per component. Notes = the one thing a future session must know
 | Name | Path | Purpose | Key props | Notes |
 | --- | --- | --- | --- | --- |
 | `ScrollCue` | `src/components/ui/ScrollCue.tsx` | 1 px line that breathes + vertical `SCROLL` eyebrow | `className` (position it) | `aria-hidden`. Uses the `animate-breathe` token; `motion-reduce:animate-none`. The only timer animation besides the marquee. |
+| `Eyebrow` | `src/components/ui/Eyebrow.tsx` | Index / eyebrow type (`text-mono-sm`, faint, tracked) | `as` (`p` default, `h2`, `h3`, `span`, `li`, `figcaption`), `id`, `className` | Promoted in 10 (4th use). `Section` renders its eyebrow heading with it. Decorative color — never the only signal. |
+| `MonoLabel` | `src/components/ui/MonoLabel.tsx` | Mono label (`text-mono`, muted, uppercase) | `as`, `id`, `className` | Promoted in 10. Not for sentences > ~6 words. Nav/Footer keep their own link classes (hover states). |
+| `Badge` | `src/components/ui/Badge.tsx` | Outline role badge | `className` | `<span>`; wrap in `<li>` for lists. Max `LIMITS.maxRolesPerProject` (3) per card. Never filled. |
+| `TrackLink` | `src/components/ui/TrackLink.tsx` | `next/link` that fires one analytics event on click | all `Link` props + `event`, `payload` (typed per event) | **Client leaf** (no state/effects) — the way Server Component scenes emit `work_open` / `contact_click`. |
 
 ## Components — `layout/`
 
 | Name | Path | Purpose | Key props | Notes |
 | --- | --- | --- | --- | --- |
-| `Section` | `src/components/layout/Section.tsx` | Scene wrapper: `<section id>` + the scene's one `<h2>`, `px-gutter` full-bleed | `id`, `label`, `heading: 'eyebrow' \| 'hidden'` (default hidden), `contained` (About/Credits only), `className` | Server component. `aria-labelledby` wired to the h2. Anchor target for Nav links. |
+| `Section` | `src/components/layout/Section.tsx` | Scene wrapper: `<section id>` + the scene's one `<h2>`, `px-gutter` full-bleed | `id`, `label`, `heading: 'eyebrow' \| 'hidden'` (default hidden), `contained` (About/Credits only), `bleed` (no gutter — full-bleed media scenes), `className` | Server component. `aria-labelledby` wired to the h2 (an `Eyebrow as="h2"` when visible). Anchor target for Nav links. |
 | `Nav` | `src/components/layout/Nav.tsx` | Sticky primary nav: name left, `WORK · REEL · CONTACT` right | `name: string` | **Client** (IntersectionObserver on a 100 svh sentinel → `stuck`: `border-line` + `bg-bg`). Sticky from the top, not absolute→sticky. Links are hash anchors until Lenis (04) takes `scrollTo`. Needs `body.relative`. |
 | `SkipLink` | `src/components/layout/SkipLink.tsx` | `SKIP TO WORK`, first focusable on every page | — | `sr-only` until `focus-visible`. Must stay the first child of `<body>`. |
 | `Footer` | `src/components/layout/Footer.tsx` | Colophon: © year name · Site by dev · type credit | — | Server component; reads `getSite()`. Year computed at build. Links `text-muted` by default here (ui-rules). |
@@ -55,7 +59,7 @@ One line per component. Notes = the one thing a future session must know
 | Name | Path | Purpose | Key props | Notes |
 | --- | --- | --- | --- | --- |
 | `MotionProvider` + `useLenis()` | `src/components/motion/MotionProvider.tsx` | Registers GSAP plugins once; owns the single Lenis instance and the ticker sync; `ScrollTrigger.refresh()` on `fonts.ready` | `children` | Wrapped around the body in `layout.tsx`. No Lenis under reduced motion (watched live). `useLenis()` returns the instance or `null` — via `useSyncExternalStore`, not context. |
-| `Reveal` | `src/components/motion/Reveal.tsx` | Triggered reveal at `top 85%`, once | `variant: 'wipe' \| 'soft'` (default wipe), `delay` (s, a `DUR.*`/`STAGGER.*` value), `className` | Start state is CSS (`[data-reveal]`), see motion-rules → No flash. Reduced: `DUR.fast` fade. |
+| `Reveal` | `src/components/motion/Reveal.tsx` | Triggered reveal at `top 85%`, once | `variant: 'wipe' \| 'soft'` (default wipe), `delay` (s, a `DUR.*`/`STAGGER.*` value), `start` (ScrollTrigger start; cards use `top 60%`), `className` | Start state is CSS (`[data-reveal]`), see motion-rules → No flash. Reduced: `DUR.fast` fade. |
 | `OpeningExit` | `src/components/motion/OpeningExit.tsx` | Scene 01 exit: media push-in 1.08 + dim 0.4, text parallax 1.4 | `className`, children with `[data-opening-media]` and `[data-opening-text]` | Scene-specific by design: one scrubbed timeline, one ScrollTrigger (`top top` → `bottom top`). Reduced: nothing moves. Values in `OPENING_EXIT` (`lib/motion.ts`). |
 | `Pin` + `usePin()` | `src/components/motion/Pin.tsx` | Pins a scene `vh`% and owns its one scrubbed timeline | `vh` (always `PIN.*`), `className` | Children in `motion/` add tweens via `usePin()` (null on server — guard). Reduced: no pin, `progress(1)`. |
 | `ScrubWords` | `src/components/motion/ScrubWords.tsx` | Words faint → primary as the pin scrubs; last word `accent` in the final 10 % | `text` (≤ 20 words), `className` | Must be inside `<Pin>`. `aria-label` carries the sentence; spans are `aria-hidden`. Start state CSS (`[data-scrub-word]`). |
@@ -67,6 +71,7 @@ One line per component. Notes = the one thing a future session must know
 
 | Scene | Path | Composes | Assets | Notes |
 | --- | --- | --- | --- | --- |
+| 03 Selected Work | `src/components/scenes/03-SelectedWork.tsx` | `Section` (hidden h2, `bleed`) › `parts/StickyStack` › `parts/WorkCard` × n (`TrackLink` card › `VideoLoop dim` + scrim + `Eyebrow` index + `Reveal` wipe `h3` + `MonoLabel` client · year + `Badge` roles) | 5 project loops + posters (demo: one clip ×5) | Cards link to `/work/[slug]` (404 until 17). Empty state `WORK COMING SOON`. Hover un-dim via `group-hover`. Focus ring inset (`-outline-offset-8`). |
 | 02 Statement | `src/components/scenes/02-Statement.tsx` | `Section` (hidden h2) › `Pin` 150 vh › `ScrubWords` (`site.statement`, `text-display`, `max-w-[20ch]`) | none | No gap before/after (pinned). Reduced: no pin, sentence lit. Sentence is the script's placeholder until the developer writes his. |
 | 01 Opening | `src/components/scenes/01-Opening.tsx` | `OpeningExit` › `VideoLoop` (hero, `priority`) + `Reveal` wipe (`h1` name) + `Reveal` soft (meta, `delay={DUR.base}`) + `ScrollCue` | `site.assets.heroLoop` (demo 576p — replace) | `<section id="opening">`, `-mt-(--nav-h)`, `overflow-hidden`. Text in the bottom band over a `from-scrim` gradient; cue bottom-right. Prologue (07) hands off into this section. |
 
@@ -76,8 +81,10 @@ _Reusable layouts and compositions (e.g. "text in bottom band over dimmed video"
 "two-column mono table"). Added as they emerge, with a pointer to the first file that
 uses them._
 
-- **Eyebrow** (`font-mono text-mono-sm tracking-[0.12em] text-text-faint uppercase`) — first in `Section.tsx` (heading="eyebrow"); also `not-found.tsx`, `page.tsx`. Promote to `ui/Eyebrow.tsx` the moment scene 07/08 needs it a fourth time.
-- **Mono label** (`font-mono text-mono tracking-[0.06em] text-text-muted uppercase`) — first in `Nav.tsx` links; also `Footer.tsx`, `SkipLink.tsx`, `not-found.tsx`. Same promotion rule → `ui/MonoLabel.tsx`.
+- **Eyebrow** → promoted to `ui/Eyebrow` in feature 10. Remaining inline copies (dev pages, `01-Opening` meta) are fine to migrate opportunistically.
+- **Mono label** → promoted to `ui/MonoLabel` in feature 10. `Nav`, `Footer`, `SkipLink` keep inline classes because theirs carry link hover/focus states.
+- **Stack-and-cover** (`parts/StickyStack`: `<ul relative>` › `<li sticky top-0 h-svh>`) — pure CSS, first in `03-SelectedWork`. Not for lists > 8.
+- **Text in the bottom band over dimmed footage** (`absolute inset-x-0 bottom-0 … p-gutter pb-band` over `bg-linear-to-t from-scrim to-transparent`) — `01-Opening` and `parts/WorkCard`.
 - **Mono link hover** (`transition-colors duration-(--dur-fast) ease-out hover:text-text-primary focus-visible:text-text-primary motion-reduce:transition-none`) — `Nav.tsx`, `Footer.tsx`. Reduced motion handled by the Tailwind `motion-reduce:` variant, no custom class.
 - **Missing-reel card** (`bg-surface rounded-sm p-8 md:p-12 max-w-[65ch]`) — `not-found.tsx`. The only card surface so far.
 
