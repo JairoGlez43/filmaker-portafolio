@@ -26,3 +26,6 @@ export const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
 /** Trigger reveals when the element's top reaches 85 % of the viewport (motion-rules → Scroll rules). */
 export const REVEAL_START = 'top 85%';
+
+/** Scene 01 exit (experience-script §01): loop pushes in and dims, text drifts up faster than the page. */
+export const OPENING_EXIT = { scale: 1.08, dim: 0.4, parallax: 1.4 } as const;

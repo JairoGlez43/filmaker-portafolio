@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Inter_Tight, JetBrains_Mono } from 'next/font/google';
 import { Footer } from '@/components/layout/Footer';
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           <div className="flex-1">{children}</div>
           <Footer />
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );

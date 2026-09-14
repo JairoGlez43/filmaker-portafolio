@@ -94,6 +94,13 @@ simply does not exist and fails visibly.
   /* Layout */
   --container-max: 1600px;
   --nav-h: 64px;
+
+  /* The scroll cue's breath — the only timer-driven animation besides the marquee */
+  --animate-breathe: breathe 2.4s var(--ease-in-out) infinite;
+  @keyframes breathe {
+    0%, 100% { transform: scaleY(0.25); opacity: 0.4; }
+    50%      { transform: scaleY(1);    opacity: 1; }
+  }
 }
 ```
 

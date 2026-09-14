@@ -1,10 +1,11 @@
 import { Section } from '@/components/layout/Section';
-import { getSite } from '@/lib/content';
+import { Opening } from '@/components/scenes/01-Opening';
 
 /**
- * Temporary home. The hero block is the token proof from feature 01; the three sections
- * below exist only so the Nav anchors (#work, #reel, #contact) have somewhere to land.
- * Phase 2 replaces this file with the scene composition (build-plan.md → 07…16).
+ * The film. Scenes are composed here in script order (experience-script.md → Scene index).
+ * Scene 00 (Prologue) mounts above the Opening once its plates exist (feature 07). The
+ * placeholder sections below give the Nav anchors somewhere to land until their scenes
+ * arrive.
  */
 const PLACEHOLDER_SCENES = [
   { id: 'work', label: 'Selected work', arrives: '10' },
@@ -13,21 +14,9 @@ const PLACEHOLDER_SCENES = [
 ] as const;
 
 export default function Home() {
-  const site = getSite();
-
   return (
     <>
-      <section
-        aria-label="Opening"
-        className="px-gutter pb-band -mt-(--nav-h) flex min-h-svh flex-col justify-end gap-6"
-      >
-        <h1 className="font-display text-display-xl text-text-primary leading-[0.9] font-semibold tracking-[-0.02em]">
-          {site.name}
-        </h1>
-        <p className="text-mono text-text-muted font-mono tracking-[0.06em] uppercase">
-          {site.roleLine} — {site.city}
-        </p>
-      </section>
+      <Opening />
 
       {PLACEHOLDER_SCENES.map((scene) => (
         <Section

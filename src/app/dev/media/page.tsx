@@ -66,6 +66,7 @@ export default function MediaBench() {
         <LazyVimeo
           vimeoId={site.vimeoReelId}
           title="Showreel"
+          source="home"
           poster={null}
           label={`Showreel · ${site.reelRuntime}`}
         />

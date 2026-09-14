@@ -139,6 +139,10 @@ Logic: `VideoLoop` + `Reveal` + scrub timeline for exit.
 Done: LCP element = poster ≤ 2.5 s mobile; loop plays without tap on iOS; text never overlaps a face in the chosen loop.
 Notes: ⏸ HUMAN: hero loop + poster per asset-pipeline §Hero. Run `asset-check`.
 Done also requires: prologue→loop hand-off shows no frame jump.
+Built 2026-09-12 (before 07, by decision): `scenes/01-Opening` + `motion/OpeningExit`
+(one scrubbed timeline for push-in/dim/parallax), `ui/ScrollCue` (`animate-breathe`
+token), `Reveal` gained `delay`. Runs on the demo 576p hero; LCP/iOS/hand-off checks
+stay open until the real master and the Prologue exist.
 
 ### 09 Scene 02 Statement
 

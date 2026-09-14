@@ -158,9 +158,12 @@ never with setState inside an effect. Official CSS via `import 'lenis/dist/lenis
 ### @vercel/analytics
 
 **Check first:** `https://vercel.com/docs/analytics/quickstart` and `.../custom-events`.
-**Version pinned:** fill exact.
-**How we use it here:** `<Analytics />` in `layout.tsx`; `track()` wrapped in
-`@/lib/analytics` so event names are typed and centralized.
+**Version pinned:** @vercel/analytics 2.0.1 (installed 2026-09-12, feature 06).
+**How we use it here:** `<Analytics />` from `@vercel/analytics/next` as the last child of
+`<body>` in `layout.tsx`; `track()` wrapped in `@/lib/analytics` so event names are typed
+and centralized. Web Analytics must be **enabled in the Vercel dashboard** (Analytics →
+Enable) or nothing is collected. **Custom events require a Pro/Enterprise plan** — on Hobby
+the three events are sent but never shown; page views still work.
 **Canonical snippet:**
 
 ```ts

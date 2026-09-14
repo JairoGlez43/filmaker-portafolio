@@ -2,12 +2,17 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { track } from '@/lib/analytics';
 
 type LazyVimeoProps = {
   /** Vimeo id; unlisted videos carry their hash as `123456789?h=abcdef`. */
   vimeoId: string;
   /** iframe title (ui-rules → Accessibility). */
   title: string;
+  /** Where the player lives — sent with the `reel_play` event. */
+  source: 'home' | 'work';
+  /** Case-study slug, for `reel_play` on /work/[slug]. */
+  slug?: string;
   /** Poster path, or null when it does not exist yet — a `bg-surface` block stands in. */
   poster: string | null;
   sizes?: string;
@@ -36,12 +41,14 @@ function embedUrl(vimeoId: string, muted: boolean): string {
 /**
  * Poster + play button; the Vimeo iframe exists in the DOM only after the click (the
  * click is the autoplay gesture, so sound is allowed). `Escape` or the close label unmount
- * it and return focus to the play button. No third-party script, no SDK.
- * Analytics (`reel_play`) is wired in feature 06.
+ * it and return focus to the play button. No third-party script, no SDK. The click also
+ * fires `reel_play` (code-standards.md → Tracked events).
  */
 export function LazyVimeo({
   vimeoId,
   title,
+  source,
+  slug,
   poster,
   sizes = '100vw',
   muted = false,
@@ -52,6 +59,11 @@ export function LazyVimeo({
   const playRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
+
+  const play = () => {
+    track('reel_play', { source, slug });
+    setOpen(true);
+  };
 
   useEffect(() => {
     if (open) {
@@ -96,7 +108,7 @@ export function LazyVimeo({
           <button
             ref={playRef}
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={play}
             aria-label={`Play ${title}`}
             className="group absolute inset-0 flex items-center justify-center"
           >

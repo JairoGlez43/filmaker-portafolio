@@ -11,12 +11,12 @@ and next. Update after every completed feature. A feature is checked only after 
 
 ## Current status
 
-- **Phase:** 1 — Foundation
-- **Last completed:** 05 Media primitives (2026-09-12) — VideoLoop + videoRegistry, LazyVimeo, Lightbox, bench at `/dev/media`; **iOS Safari autoplay check pending** (no device at hand)
+- **Phase:** 2 — The film (`/`) — Phase 1 complete 2026-09-12
+- **Last completed:** 08 Scene 01 Opening (2026-09-12) — hero loop + name reveal + meta + scroll cue + push-in/dim/parallax exit, on the demo 576p hero. Open checks: LCP ≤ 2.5 s on Vercel mobile, iOS autoplay, prologue hand-off (when 07 exists)
 - **In progress:** —
-- **Next:** 06 Analytics
-- **Blockers:** hero/project footage and the 9 prologue plates not yet sourced (see asset-pipeline.md → Placeholders / Prologue plates)
-- **⏸ HUMAN gates open:** none yet (features 01–06 need no human asset)
+- **Next:** 09 Scene 02 Statement (07 Prologue waits for the developer's own plates — he starts Blender on 2026-09-13)
+- **Blockers:** `NEXT_PUBLIC_SITE_URL` not set in Vercel (production sitemap lists localhost) · iOS Safari autoplay check for 05 outstanding
+- **⏸ HUMAN gates open:** 07 needs the 9 prologue plates (`public/img/prologue/plate-01…09.jpg`, same grade family as the hero poster); demo hero loop/poster exist but are 576p — see Asset status
 
 ## Progress
 
@@ -27,12 +27,12 @@ and next. Update after every completed feature. A feature is checked only after 
 - [x] 03 Layout shell
 - [x] 04 Motion foundation
 - [x] 05 Media primitives (iOS Safari check outstanding)
-- [ ] 06 Analytics
+- [x] 06 Analytics (dashboard check pending: enable Web Analytics; custom events need Pro)
 
 ### Phase 2 — The film (`/`)
 
 - [ ] 07 Scene 00 Prologue — DOM version (v1)
-- [ ] 08 Scene 01 Opening
+- [x] 08 Scene 01 Opening (built 2026-09-12 on the demo hero; LCP/iOS/hand-off checks open)
 - [ ] 09 Scene 02 Statement
 - [ ] 10 Scene 03 Selected Work
 - [ ] 11 Scene 04 Craft — Direction & Edit
@@ -96,6 +96,9 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-12 · Video lifecycle on IntersectionObservers, not ScrollTrigger; poster is a `next/image` under a transparent `<video>` · see architecture decisions. The `<video>` is not rendered under reduced motion or reduced data.
 - 2026-09-12 · Demo assets: one 576p clip for hero + all 5 slugs, 4 stills on `northern-light`, Vimeo id `1084537` (Big Buck Bunny) · enough to exercise every media primitive; all to be replaced by footage the developer shoots.
 - 2026-09-12 · Stills limit redefined as ≤ 2400 px on the longest side (`--max`), not width · a 9:16 frame capped by width alone is 10 MP and cannot meet 400 KB.
+- 2026-09-12 · Phase 2 starts with 08 (Opening), 07 (Prologue) deferred until the developer's own plates exist · 08 only needs the demo hero; 07 built on placeholder crops would be throwaway.
+- 2026-09-12 · Scene 01 exit is one scene-specific wrapper (`OpeningExit`) rather than generic `Parallax` + `ScaleIn` · both layers ride the same scroll; one timeline, one ScrollTrigger. A generic `Parallax` is created the day a second scene (About, 0.85) needs it.
+- 2026-09-12 · Analytics built as specified although Vercel custom events require a Pro plan · the code is identical on every plan; page views work on Hobby; the three events are emitted and become visible the day the plan allows it. `track()` also logs to the console outside production so the wiring is verifiable locally.
 
 ## Notes
 

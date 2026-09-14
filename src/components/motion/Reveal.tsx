@@ -8,6 +8,8 @@ import { DUR, EASE, FULL_MOTION_QUERY, REDUCED_MOTION_QUERY, REVEAL_START } from
 type RevealProps = {
   /** `wipe`: clip-path from the bottom, for headings and images. `soft`: fade + 16 px, for body copy and labels. */
   variant?: 'wipe' | 'soft';
+  /** Seconds after the trigger fires — a `STAGGER.*` or `DUR.*` value, for "X appears after Y". */
+  delay?: number;
   className?: string;
   children: ReactNode;
 };
@@ -22,7 +24,7 @@ const WIPE_TO = 'inset(0% 0% 0% 0%)';
  * globals.css), applied before first paint by the inline script in layout.tsx. GSAP only
  * animates TO the final state. Without JS nothing is hidden.
  */
-export function Reveal({ variant = 'wipe', className = '', children }: RevealProps) {
+export function Reveal({ variant = 'wipe', delay = 0, className = '', children }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -37,22 +39,22 @@ export function Reveal({ variant = 'wipe', className = '', children }: RevealPro
           gsap.fromTo(
             el,
             { clipPath: WIPE_FROM },
-            { clipPath: WIPE_TO, duration: DUR.slow, ease: EASE.out, scrollTrigger },
+            { clipPath: WIPE_TO, duration: DUR.slow, ease: EASE.out, delay, scrollTrigger },
           );
         } else {
           gsap.fromTo(
             el,
             { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: DUR.base, ease: EASE.out, scrollTrigger },
+            { opacity: 1, y: 0, duration: DUR.base, ease: EASE.out, delay, scrollTrigger },
           );
         }
       });
 
       mm.add(REDUCED_MOTION_QUERY, () => {
-        gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: DUR.fast, scrollTrigger });
+        gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: DUR.fast, delay, scrollTrigger });
       });
     },
-    { scope: ref, dependencies: [variant] },
+    { scope: ref, dependencies: [variant, delay] },
   );
 
   return (

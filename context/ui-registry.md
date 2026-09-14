@@ -28,9 +28,9 @@ One line per component. Notes = the one thing a future session must know
 
 ## Components — `ui/` (presentational)
 
-| Name    | Path | Purpose | Key props | Notes |
-| ------- | ---- | ------- | --------- | ----- |
-| _empty_ |      |         |           |       |
+| Name | Path | Purpose | Key props | Notes |
+| --- | --- | --- | --- | --- |
+| `ScrollCue` | `src/components/ui/ScrollCue.tsx` | 1 px line that breathes + vertical `SCROLL` eyebrow | `className` (position it) | `aria-hidden`. Uses the `animate-breathe` token; `motion-reduce:animate-none`. The only timer animation besides the marquee. |
 
 ## Components — `layout/`
 
@@ -47,7 +47,7 @@ One line per component. Notes = the one thing a future session must know
 | --- | --- | --- | --- | --- |
 | `VideoLoop` | `src/components/media/VideoLoop.tsx` | Muted loop: `next/image` poster underneath, `<video>` cross-fades in when playing | `loop: Loop`, `slug`, `sizes` (always pass), `priority` (hero only), `dim` (70 %), `className` (give it an aspect ratio) | **Client.** Sources attach within `LIMITS.videoLoadMarginPx`; plays in the central 60 % band; ≤ `LIMITS.maxPlayingVideos` via `videoRegistry`. No `<video>` at all under reduced motion **or** reduced data. No GSAP. |
 | `videoRegistry` | `src/components/media/videoRegistry.ts` | Decode budget: `requestPlay`, `release`, `usePlayingCount` | — | Module store + `useSyncExternalStore`. Pauses the oldest loop when the budget is full; logs `[media/VideoLoop] play failed: <slug>`. |
-| `LazyVimeo` | `src/components/media/LazyVimeo.tsx` | Poster + 64 px play → Vimeo iframe only after click | `vimeoId` (`id` or `id?h=hash`), `title`, `poster \| null`, `sizes`, `muted`, `label`, `className` | **Client.** `dnt=1` always; `Escape`/`CLOSE ×` unmount; focus returns to play. `poster: null` renders the `bg-surface` block (honest missing state). `reel_play` tracking arrives in 06. |
+| `LazyVimeo` | `src/components/media/LazyVimeo.tsx` | Poster + 64 px play → Vimeo iframe only after click | `vimeoId` (`id` or `id?h=hash`), `title`, `source: 'home' \| 'work'`, `slug?`, `poster \| null`, `sizes`, `muted`, `label`, `className` | **Client.** `dnt=1` always; `Escape`/`CLOSE ×` unmount; focus returns to play. `poster: null` renders the `bg-surface` block (honest missing state). Fires `track('reel_play', { source, slug })` on click. |
 | `Lightbox` | `src/components/media/Lightbox.tsx` | Native `<dialog>` for one still | `still: Still \| null`, `onClose` | **Client.** State lives in the gallery. `showModal()`; backdrop click + Escape close; browser restores focus; `lenis.stop()/start()` while open. `next/image` with the still's width/height, `sizes="90vw"`. |
 
 ## Components — `motion/` (client wrappers)
@@ -55,7 +55,8 @@ One line per component. Notes = the one thing a future session must know
 | Name | Path | Purpose | Key props | Notes |
 | --- | --- | --- | --- | --- |
 | `MotionProvider` + `useLenis()` | `src/components/motion/MotionProvider.tsx` | Registers GSAP plugins once; owns the single Lenis instance and the ticker sync; `ScrollTrigger.refresh()` on `fonts.ready` | `children` | Wrapped around the body in `layout.tsx`. No Lenis under reduced motion (watched live). `useLenis()` returns the instance or `null` — via `useSyncExternalStore`, not context. |
-| `Reveal` | `src/components/motion/Reveal.tsx` | Triggered reveal at `top 85%`, once | `variant: 'wipe' \| 'soft'` (default wipe), `className` | Start state is CSS (`[data-reveal]`), see motion-rules → No flash. Reduced: `DUR.fast` fade. |
+| `Reveal` | `src/components/motion/Reveal.tsx` | Triggered reveal at `top 85%`, once | `variant: 'wipe' \| 'soft'` (default wipe), `delay` (s, a `DUR.*`/`STAGGER.*` value), `className` | Start state is CSS (`[data-reveal]`), see motion-rules → No flash. Reduced: `DUR.fast` fade. |
+| `OpeningExit` | `src/components/motion/OpeningExit.tsx` | Scene 01 exit: media push-in 1.08 + dim 0.4, text parallax 1.4 | `className`, children with `[data-opening-media]` and `[data-opening-text]` | Scene-specific by design: one scrubbed timeline, one ScrollTrigger (`top top` → `bottom top`). Reduced: nothing moves. Values in `OPENING_EXIT` (`lib/motion.ts`). |
 | `Pin` + `usePin()` | `src/components/motion/Pin.tsx` | Pins a scene `vh`% and owns its one scrubbed timeline | `vh` (always `PIN.*`), `className` | Children in `motion/` add tweens via `usePin()` (null on server — guard). Reduced: no pin, `progress(1)`. |
 | `ScrubWords` | `src/components/motion/ScrubWords.tsx` | Words faint → primary as the pin scrubs; last word `accent` in the final 10 % | `text` (≤ 20 words), `className` | Must be inside `<Pin>`. `aria-label` carries the sentence; spans are `aria-hidden`. Start state CSS (`[data-scrub-word]`). |
 | `dev/TriggerCount` | `src/components/motion/dev/TriggerCount.tsx` | Live `ScrollTrigger.getAll().length` | — | Dev only (`/dev/motion`). Deleted in 21. |
@@ -64,9 +65,9 @@ One line per component. Notes = the one thing a future session must know
 
 ## Scenes — `scenes/`
 
-| Scene   | Path | Composes | Assets | Notes |
-| ------- | ---- | -------- | ------ | ----- |
-| _empty_ |      |          |        |       |
+| Scene | Path | Composes | Assets | Notes |
+| --- | --- | --- | --- | --- |
+| 01 Opening | `src/components/scenes/01-Opening.tsx` | `OpeningExit` › `VideoLoop` (hero, `priority`) + `Reveal` wipe (`h1` name) + `Reveal` soft (meta, `delay={DUR.base}`) + `ScrollCue` | `site.assets.heroLoop` (demo 576p — replace) | `<section id="opening">`, `-mt-(--nav-h)`, `overflow-hidden`. Text in the bottom band over a `from-scrim` gradient; cue bottom-right. Prologue (07) hands off into this section. |
 
 ## Patterns
 

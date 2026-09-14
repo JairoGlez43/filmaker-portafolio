@@ -42,6 +42,7 @@ export const DUR = {
 
 export const STAGGER = { text: 0.08, list: 0.05 } as const;
 export const SCRUB = { tight: 0.3, base: 0.6, loose: 1.2 } as const; // ScrollTrigger scrub smoothing
+export const OPENING_EXIT = { scale: 1.08, dim: 0.4, parallax: 1.4 } as const; // scene 01 exit (§01)
 ```
 
 CSS mirrors for non-GSAP transitions: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)`,
