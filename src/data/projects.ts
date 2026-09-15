@@ -1,17 +1,17 @@
 import type { Project, Still } from '@/types/content';
 
 // Five FICTIONAL placeholder projects. Titles read as working titles, never brands.
-// Every client-specific fact is a {{PLACEHOLDER}} that renders literally until the
-// real client replaces this file. Asset paths are canonical (asset-pipeline.md →
-// Naming); the files arrive through the Assets chat and `pnpm content:check` reports
-// which ones are still missing.
+// DEMO CONTENT: clients, credits and summaries are invented so the site can be judged
+// visually; `fictional: true` marks every one of them. The real client replaces this file.
+// Asset paths are canonical (asset-pipeline.md → Naming); the files arrive through the
+// Assets chat and `pnpm content:check` reports which ones are still missing.
 
-function stills(slug: string, count: number): Still[] {
+function stills(slug: string, title: string, count: number): Still[] {
   return Array.from({ length: count }, (_, i) => {
     const n = String(i + 1).padStart(2, '0');
     return {
       src: `/img/${slug}/still-${n}.jpg`,
-      alt: `{{${slug.toUpperCase().replace(/-/g, '_')}_STILL_${n}_ALT}}`,
+      alt: `Still ${n} from ${title}`,
       width: 2400,
       height: 1350,
     };
@@ -47,11 +47,13 @@ const NORTHERN_LIGHT_STILLS: Still[] = [
   },
 ];
 
+const FILMMAKER = 'Adriana Villates';
+
 export const projects: Project[] = [
   {
     slug: 'northern-light',
     title: 'Northern Light',
-    client: '{{CLIENT_01}}',
+    client: 'Casa Marlow',
     year: 2026,
     roles: ['director', 'editor', 'colorist'],
     order: 1,
@@ -64,18 +66,19 @@ export const projects: Project[] = [
     },
     stills: NORTHERN_LIGHT_STILLS,
     credits: [
-      { label: 'Director', value: '{{FILMMAKER_NAME}}' },
-      { label: 'Editor', value: '{{FILMMAKER_NAME}}' },
-      { label: 'Colorist', value: '{{FILMMAKER_NAME}}' },
-      { label: 'DOP', value: '{{DOP_01}}' },
+      { label: 'Director', value: FILMMAKER },
+      { label: 'Editor', value: FILMMAKER },
+      { label: 'Colorist', value: FILMMAKER },
+      { label: 'DOP', value: 'Pau Serra' },
     ],
-    summary: '{{SUMMARY_01}}',
+    summary:
+      'A brand film for a yacht charter shot over two evenings at anchor: one boat, one sunset, no dialogue.',
     fictional: true,
   },
   {
     slug: 'salt-roads',
     title: 'Salt Roads',
-    client: '{{CLIENT_02}}',
+    client: 'Atelier Ondas',
     year: 2025,
     roles: ['editor', 'colorist'],
     order: 2,
@@ -86,19 +89,20 @@ export const projects: Project[] = [
       poster: '/img/salt-roads/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('salt-roads', 4),
+    stills: stills('salt-roads', 'Salt Roads', 4),
     credits: [
-      { label: 'Director', value: '{{DIRECTOR_02}}' },
-      { label: 'Editor', value: '{{FILMMAKER_NAME}}' },
-      { label: 'Colorist', value: '{{FILMMAKER_NAME}}' },
+      { label: 'Director', value: 'Ana Vidal' },
+      { label: 'Editor', value: FILMMAKER },
+      { label: 'Colorist', value: FILMMAKER },
     ],
-    summary: '{{SUMMARY_02}}',
+    summary:
+      'A ceramics studio followed from clay to kiln, cut to the rhythm of the wheel and graded warm to match the glaze.',
     fictional: true,
   },
   {
     slug: 'interval',
     title: 'Interval',
-    client: '{{CLIENT_03}}',
+    client: 'Lumen Records',
     year: 2025,
     roles: ['director', 'dop'],
     order: 3,
@@ -109,19 +113,20 @@ export const projects: Project[] = [
       poster: '/img/interval/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('interval', 4),
+    stills: stills('interval', 'Interval', 4),
     credits: [
-      { label: 'Director', value: '{{FILMMAKER_NAME}}' },
-      { label: 'DOP', value: '{{FILMMAKER_NAME}}' },
-      { label: 'Editor', value: '{{EDITOR_03}}' },
+      { label: 'Director', value: FILMMAKER },
+      { label: 'DOP', value: FILMMAKER },
+      { label: 'Editor', value: 'Marc Oliva' },
     ],
-    summary: '{{SUMMARY_03}}',
+    summary:
+      'A single-take music video shot at dusk on the breakwater, the camera never more than an arm from the singer.',
     fictional: true,
   },
   {
     slug: 'ninety-seconds',
     title: 'Ninety Seconds',
-    client: '{{CLIENT_04}}',
+    client: 'Fjord & Sons',
     year: 2024,
     roles: ['editor'],
     order: 4,
@@ -132,18 +137,19 @@ export const projects: Project[] = [
       poster: '/img/ninety-seconds/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('ninety-seconds', 4),
+    stills: stills('ninety-seconds', 'Ninety Seconds', 4),
     credits: [
-      { label: 'Director', value: '{{DIRECTOR_04}}' },
-      { label: 'Editor', value: '{{FILMMAKER_NAME}}' },
+      { label: 'Director', value: 'Sofía Ruano' },
+      { label: 'Editor', value: FILMMAKER },
     ],
-    summary: '{{SUMMARY_04}}',
+    summary:
+      'A launch spot for a rainwear label, cut from six hours of footage to exactly ninety seconds of weather.',
     fictional: true,
   },
   {
     slug: 'undertow',
     title: 'Undertow',
-    client: '{{CLIENT_05}}',
+    client: 'Bahía Films',
     year: 2023,
     roles: ['colorist', 'editor'],
     order: 5,
@@ -154,13 +160,14 @@ export const projects: Project[] = [
       poster: '/img/undertow/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('undertow', 4),
+    stills: stills('undertow', 'Undertow', 4),
     credits: [
-      { label: 'Director', value: '{{DIRECTOR_05}}' },
-      { label: 'Editor', value: '{{FILMMAKER_NAME}}' },
-      { label: 'Colorist', value: '{{FILMMAKER_NAME}}' },
+      { label: 'Director', value: 'Tomás Ferrer' },
+      { label: 'Editor', value: FILMMAKER },
+      { label: 'Colorist', value: FILMMAKER },
     ],
-    summary: '{{SUMMARY_05}}',
+    summary:
+      'A short documentary on the last night swimmers of a closing lido, graded cold so the water reads as the character.',
     fictional: true,
   },
 ];

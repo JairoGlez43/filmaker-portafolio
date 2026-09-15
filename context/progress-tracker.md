@@ -12,11 +12,12 @@ and next. Update after every completed feature. A feature is checked only after 
 ## Current status
 
 - **Phase:** 2 — The film (`/`) — Phase 1 complete 2026-09-12
-- **Last completed:** 10 Scene 03 Selected Work (2026-09-14) — sticky stack of 5 cards on the demo loops, `work_open` wired; `Eyebrow`/`MonoLabel`/`Badge`/`TrackLink` in `ui/`. Open checks in the browser: title wipe on sticky cards, ≤ 2 loops decoding while scrolling the stack
+- **Last completed:** Demo-content pass (2026-09-15) — every `{{PLACEHOLDER}}` in `src/data/*` replaced by clearly fictional demo facts ("Adriana Villates", fictional clients/credits/summaries) so the site can be judged visually; Nav gets a top scrim + `text-primary` over the hero (was unreadable on a bright sky); reel id swapped to a Vimeo embed that plays (`22439234`), reel poster + OG image generated from the developer's footage; `pnpm asset:portrait` added for the About photo
 - **In progress:** —
-- **Next:** 13 Scene 05 Showreel, then 14 Clients marquee (decided 2026-09-14: 11–12 Craft deferred with 07 until the developer's assets exist — direction still, storyboard SVG, 6 contact-sheet frames, log/grade pair, 9 plates)
+- **Next:** 18 Stills gallery + lightbox (scene 12) on `/work/[slug]` · deferred until the developer's assets exist: 07 Prologue (9 plates), 11–12 Craft (direction still, storyboard SVG, 6 frames, log/grade pair)
+- **Phase 3 started 2026-09-15:** 17 Case-study skeleton done — `/work/[slug]` prerendered for the 5 projects (`dynamicParams = false` → unknown slugs are a static 404), title card, poster hero (no demo project has a `vimeoId`), credits table; per-project metadata (title template, summary, poster as OG until 20). The Selected Work cards no longer land on the 404. Housekeeping: the portrait source photo moved out of `public/` into `reelframe-sources/portrait/`
 - **Blockers:** `NEXT_PUBLIC_SITE_URL` not set in Vercel (production sitemap lists localhost) · iOS Safari autoplay check for 05 outstanding
-- **⏸ HUMAN gates open:** 07 needs the 9 prologue plates (`public/img/prologue/plate-01…09.jpg`, same grade family as the hero poster); demo hero loop/poster exist but are 576p — see Asset status
+- **⏸ HUMAN gates open:** 07 needs the 9 prologue plates (`public/img/prologue/plate-01…09.jpg`, same grade family as the hero poster) · demo hero loop/poster exist but are 576p — see Asset status
 
 ## Progress
 
@@ -37,14 +38,14 @@ and next. Update after every completed feature. A feature is checked only after 
 - [x] 10 Scene 03 Selected Work (demo loops; cards 404 until 17)
 - [ ] 11 Scene 04 Craft — Direction & Edit
 - [ ] 12 Scene 04 Craft — Color (grade wipe)
-- [ ] 13 Scene 05 Showreel
-- [ ] 14 Scene 06 Clients marquee
-- [ ] 15 Scene 07 About
-- [ ] 16 Scene 08 Contact + footer
+- [x] 13 Scene 05 Showreel (demo reel id `22439234` + demo poster frame; own reel/poster pending)
+- [x] 14 Scene 06 Clients marquee (fictional demo names)
+- [x] 15 Scene 07 About (demo portrait + demo bio lines)
+- [x] 16 Scene 08 Contact + footer (fictional demo email/URLs; Done "one line ≥ 768" revised, see build-plan)
 
 ### Phase 3 — Case study (`/work/[slug]`)
 
-- [ ] 17 Case-study page skeleton
+- [x] 17 Case-study page skeleton (5 static pages; demo projects are poster-only — no Vimeo ids)
 - [ ] 18 Stills gallery + lightbox
 - [ ] 19 Next project hand-off
 - [ ] 20 Per-project OG image
@@ -69,15 +70,15 @@ output of `pnpm content:check` (60 files as of 2026-09-11). This table is the su
 | Asset                               | Status      | Source / note                                 |
 | ----------------------------------- | ----------- | --------------------------------------------- |
 | Prologue plates ×9                  | missing     | choose with Script chat; same grade as hero   |
-| OG default image                    | missing     | `public/og/default.jpg`, 1200×630             |
+| OG default image                    | demo        | 2026-09-15: hero poster cropped to 1200×630 (60 KB) — replace with a designed card |
 | Hero loop + poster                  | demo        | 2026-09-12: developer's clip, 576p upscaled (soft) — replace with a 1080p master; poster = frame 0 |
 | Project loops ×5                    | demo        | 2026-09-12: the same clip trimmed to 7 s in all 5 slugs, to exercise VideoLoop; not five projects |
 | Stills                              | demo (1/5)  | 2026-09-12: 4 stills on `northern-light` only; other projects still missing               |
 | Craft: storyboard SVG               | missing     | draw in Figma/Illustrator, export strokes     |
 | Craft: contact-sheet frames ×6      | missing     |                                               |
 | Craft: log/grade pair               | missing     | needs Resolve session                         |
-| Reel poster + Vimeo ID              | ID demo / poster missing | Vimeo ID `1084537` (Big Buck Bunny, CC-BY) as demo; poster still missing |
-| Portrait                            | missing     |                                               |
+| Reel poster + Vimeo ID              | demo        | 2026-09-15: ID `22439234` ("The Mountain", public embed — `1084537` Big Buck Bunny never loads); poster = frame 3.5 s of the demo loop (124 KB) |
+| Portrait                            | demo        | 2026-09-15: `public/profile_pic/adriana-pp.jpeg` → `pnpm asset:portrait` → 576×720 B&W, 39 KB (source is 1080×720, so under the 1200×1500 target; reshoot 4:5 for a sharper large render) |
 | Blender scene (Phase 5)             | not started | Blender chat; 9 planes, DOF, rim light        |
 | Prologue sequence d/ + m/ (Phase 5) | missing     | 150 WebP each; `pnpm asset:seq`               |
 
@@ -98,6 +99,14 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-12 · Stills limit redefined as ≤ 2400 px on the longest side (`--max`), not width · a 9:16 frame capped by width alone is 10 MP and cannot meet 400 KB.
 - 2026-09-12 · Phase 2 starts with 08 (Opening), 07 (Prologue) deferred until the developer's own plates exist · 08 only needs the demo hero; 07 built on placeholder crops would be throwaway.
 - 2026-09-12 · Scene 01 exit is one scene-specific wrapper (`OpeningExit`) rather than generic `Parallax` + `ScaleIn` · both layers ride the same scroll; one timeline, one ScrollTrigger. A generic `Parallax` is created the day a second scene (About, 0.85) needs it.
+- 2026-09-15 · `/work/[slug]` uses `dynamicParams = false` · every case study is prerendered from `getProjects()`; an unknown slug is a static 404 (the "missing reel" card) with nothing rendered at request time — consistent with "static only".
+- 2026-09-15 · Title card's "holds 0.8 s, fades into the hero" (§09) is scroll-driven, not a timer · motion-rules allow timers only for the scroll cue and the marquee; the title card is the first viewport, the hero the next.
+- 2026-09-15 · Source files never sit in `public/` · the demo pass had left `public/profile_pic/adriana-pp.jpeg` there (it would be served publicly); moved to `reelframe-sources/portrait/`. `public/` holds pipeline outputs only.
+- 2026-09-15 · Social glyphs are inline Simple Icons paths (CC0), not an icon library · the developer asked for icons; Lucide's brand icons are deprecated and the spec bans icon libraries; three inline `<path>`s cost nothing. `ui-rules` updated.
+- 2026-09-15 · Contact email stays `text-display-xl` although it cannot fit one line at 768 px · §08's "largest text on the page" outranks the Done's line count; it wraps with `overflow-wrap: anywhere`.
+- 2026-09-15 · `StaggerChars` animates opacity, not color · "transform and opacity only" + contrast-not-hue accessibility rule; visually identical to muted → primary.
+- 2026-09-15 · `SiteAssets.reelPoster` is `string | null`, null until the frame exists · a typed "not yet" beats a path to a missing file: `LazyVimeo` renders its surface block, `content:check` still lists the canonical path as a deliverable.
+- 2026-09-15 · Marquee reduced-motion variant is CSS (`motion-reduce:` hides the duplicate track and wraps the first), not a markup switch · identical server/client markup, no hydration jump, no tween created.
 - 2026-09-14 · `StickyStack` is pure CSS in `scenes/parts/`, not a GSAP wrapper in `motion/` · stack-and-cover is `position: sticky`; no JS, works under reduced motion, nothing to clean up.
 - 2026-09-14 · `ui/TrackLink` is the one `'use client'` leaf in `ui/` · Server Component scenes cannot call `track()` on click; a stateless link wrapper is the smallest honest client boundary. Added to the allowed list in code-standards.
 - 2026-09-14 · `Eyebrow`, `MonoLabel`, `Badge` promoted to `ui/` at the 4th use, as the registry rule said · `Nav`/`Footer`/`SkipLink` keep inline classes (link states).

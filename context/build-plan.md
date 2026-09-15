@@ -185,12 +185,18 @@ UI: Full-bleed poster, play button, label, Vimeo on click, close.
 Logic: `LazyVimeo`, `track('reel_play')`, `Escape` closes.
 Done: No iframe before click; sound plays after click; keyboard operable end to end.
 Notes: ⏸ HUMAN: Vimeo upload (unlisted) + reel poster frame.
+Built 2026-09-15 (before 11–12, by decision): `scenes/05-Showreel` › `ScaleIn` › `LazyVimeo`;
+`reelPoster` is `string | null` and null today, so the scene shows the surface block
+instead of a broken image. Demo reel id = Big Buck Bunny.
 
 ### 14 Scene 06 Clients marquee
 
 UI: Infinite text marquee, hover pause.
 Logic: Duplicated track, GSAP `xPercent` loop, `timeScale` nudged by Lenis velocity.
 Done: No seam; no CLS when fonts load; reduced motion = static wrapped row.
+Built 2026-09-15: `motion/Marquee` (two tracks, `xPercent: -50` per `MARQUEE.loopSec`,
+hover pause, Lenis-velocity `timeScale` boost; reduced motion handled in CSS) +
+`scenes/06-Clients`. Names are the `{{CLIENT_NN}}` placeholders.
 
 ### 15 Scene 07 About
 
@@ -198,12 +204,20 @@ UI: Portrait + three lines + mono list.
 Logic: `Reveal` variants.
 Done: Descriptive alt; zero CLS; stacks correctly at 320 px.
 Notes: ⏸ HUMAN: portrait (B&W) + bio lines.
+Built 2026-09-15: `scenes/07-About`; `portrait` is `Still | null` (null → 4:5 surface block,
+so no broken image and no CLS); `Site.tools` added for the `TOOLS:` line. Alt text is
+written with the real photo.
 
 ### 16 Scene 08 Contact + footer
 
 UI: Giant email, socials, colophon.
 Logic: `mailto:`, `track('contact_click')`, fluid type via `clamp()` token.
 Done: Email fits one line ≥ 768 px, wraps cleanly below; event fires once per click.
+Built 2026-09-15: `scenes/08-Contact` + `motion/StaggerChars` + `ui/SocialIcon` (Simple
+Icons paths inline, at the developer's request — no icon library). Done criterion
+revised: §08 wants the email to be the largest text on the page (`text-display-xl`, up to
+11 rem), so a ~20-character address does NOT fit one line at 768 px; it wraps cleanly
+(`overflow-wrap: anywhere`) and never overflows at 320 px. Home has no placeholders left.
 
 ## Phase 3 — Case study (`/work/[slug]`)
 
@@ -213,6 +227,11 @@ UI: Title card, lazy hero video, credits table, back link.
 Logic: `generateStaticParams`, `generateMetadata` from project data, `getProject(slug)`.
 Done: All 5 placeholder projects build statically; unknown slug → 404; metadata title/description correct.
 Notes: ⏸ HUMAN per project: Vimeo id, credits, 4–8 stills with alt text.
+Built 2026-09-15: `app/work/[slug]/page.tsx` (`generateStaticParams`, `dynamicParams =
+false` → unknown slugs are a static 404, `generateMetadata` with the poster as OG until 20)
+composing `scenes/09-TitleCard`, `10-CaseHero` (LazyVimeo muted when `vimeoId` exists,
+poster only otherwise — all five demo projects), `11-Credits` (`<dl>`, empty rows omitted).
+§09's "holds 0.8 s, fades into the hero" is scroll-driven, not a timer (motion-rules).
 
 ### 18 Stills gallery + lightbox (scene 12)
 

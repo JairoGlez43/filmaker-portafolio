@@ -104,7 +104,13 @@ export function LazyVimeo({
         </>
       ) : (
         <>
-          {poster && <Image src={poster} alt="" fill sizes={sizes} className="object-cover" />}
+          {poster && (
+            <>
+              <Image src={poster} alt="" fill sizes={sizes} className="object-cover" />
+              {/* Soft scrim so the play button and label read over a bright frame. */}
+              <div aria-hidden="true" className="bg-scrim-soft absolute inset-0" />
+            </>
+          )}
           <button
             ref={playRef}
             type="button"

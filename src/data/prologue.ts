@@ -8,7 +8,7 @@ const TILES: PlateTile[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const plates: ProloguePlate[] = TILES.map((tile) => {
   const n = String(tile).padStart(2, '0');
-  return { src: `/img/prologue/plate-${n}.jpg`, alt: `{{PLATE_${n}_ALT}}`, tile };
+  return { src: `/img/prologue/plate-${n}.jpg`, alt: `Prologue frame ${n}`, tile };
 });
 
 export const prologue: PrologueConfig = {

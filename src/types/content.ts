@@ -81,8 +81,10 @@ export interface SocialLink {
 /** Site-wide assets that belong to no project (asset-pipeline.md → Inventory). */
 export interface SiteAssets {
   heroLoop: Loop;
-  reelPoster: string;
-  portrait: Still;
+  /** `/img/reel/poster.jpg`, or null until the frame exists — LazyVimeo then shows its surface block. */
+  reelPoster: string | null;
+  /** 4:5 B&W portrait at `/img/portrait.jpg`, or null until it is shot — About then shows a surface block. */
+  portrait: Still | null;
   ogDefault: string;
 }
 
@@ -93,6 +95,8 @@ export interface Site {
   statement: string;
   bio: [string, string, string];
   availability: string;
+  /** Mono list in About: `TOOLS: …` (experience-script §07). */
+  tools: string[];
   email: string;
   socials: SocialLink[];
   vimeoReelId: string;

@@ -1,38 +1,27 @@
-import { Section } from '@/components/layout/Section';
 import { Opening } from '@/components/scenes/01-Opening';
 import { Statement } from '@/components/scenes/02-Statement';
 import { SelectedWork } from '@/components/scenes/03-SelectedWork';
-import { Eyebrow } from '@/components/ui/Eyebrow';
+import { Showreel } from '@/components/scenes/05-Showreel';
+import { Clients } from '@/components/scenes/06-Clients';
+import { About } from '@/components/scenes/07-About';
+import { Contact } from '@/components/scenes/08-Contact';
 
 /**
  * The film. Scenes are composed here in script order (experience-script.md → Scene index).
- * Scene 00 (Prologue) mounts above the Opening once its plates exist (feature 07). The
- * placeholder sections below give the Nav anchors somewhere to land until their scenes
- * arrive.
+ * Still to mount once their assets exist: scene 00 Prologue above the Opening (feature 07),
+ * scene 04 Craft between Selected Work and the Showreel (11–12). The global Footer
+ * (colophon) follows Contact from layout.tsx.
  */
-const PLACEHOLDER_SCENES = [
-  { id: 'reel', label: 'Showreel', arrives: '13' },
-  { id: 'contact', label: 'Contact', arrives: '16' },
-] as const;
-
 export default function Home() {
   return (
     <>
       <Opening />
       <Statement />
       <SelectedWork />
-
-      {PLACEHOLDER_SCENES.map((scene) => (
-        <Section
-          key={scene.id}
-          id={scene.id}
-          label={scene.label}
-          heading="eyebrow"
-          className="border-line flex min-h-svh flex-col justify-center gap-4 border-t"
-        >
-          <Eyebrow>Placeholder — scene arrives in feature {scene.arrives}</Eyebrow>
-        </Section>
-      ))}
+      <Showreel />
+      <Clients />
+      <About />
+      <Contact />
     </>
   );
 }

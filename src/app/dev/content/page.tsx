@@ -54,8 +54,8 @@ export default function ContentInspector() {
     site.assets.heroLoop.mp4,
     site.assets.heroLoop.webm,
     site.assets.heroLoop.poster,
-    site.assets.reelPoster,
-    site.assets.portrait.src,
+    site.assets.reelPoster ?? '/img/reel/poster.jpg',
+    site.assets.portrait?.src ?? '/img/portrait.jpg',
     site.assets.ogDefault,
     ...prologue.plates.map((plate) => plate.src),
     ...craft.flatMap((beat) => Object.values(beat.assets)),
@@ -111,8 +111,8 @@ export default function ContentInspector() {
           <AssetPath path={site.assets.heroLoop.mp4} />
           <AssetPath path={site.assets.heroLoop.webm} />
           <AssetPath path={site.assets.heroLoop.poster} />
-          <AssetPath path={site.assets.reelPoster} />
-          <AssetPath path={site.assets.portrait.src} />
+          <AssetPath path={site.assets.reelPoster ?? '/img/reel/poster.jpg'} />
+          <AssetPath path={site.assets.portrait?.src ?? '/img/portrait.jpg'} />
           <AssetPath path={site.assets.ogDefault} />
         </ul>
       </Block>

@@ -1,12 +1,14 @@
 // Client names for the marquee (scene 06). Text only — no logos, ever.
+// DEMO CONTENT: fictional studios and brands so the marquee can be judged visually.
+// 01–05 match the `client` field of the five projects in projects.ts.
 
 export const clients: string[] = [
-  '{{CLIENT_01}}',
-  '{{CLIENT_02}}',
-  '{{CLIENT_03}}',
-  '{{CLIENT_04}}',
-  '{{CLIENT_05}}',
-  '{{CLIENT_06}}',
-  '{{CLIENT_07}}',
-  '{{CLIENT_08}}',
+  'Casa Marlow',
+  'Atelier Ondas',
+  'Lumen Records',
+  'Fjord & Sons',
+  'Bahía Films',
+  'Studio Norte',
+  'Kiln Coffee Roasters',
+  'Modo Agency',
 ];

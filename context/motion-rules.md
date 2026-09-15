@@ -40,9 +40,12 @@ export const DUR = {
   scene: 0.9, // curtain split, page transition
 } as const;
 
-export const STAGGER = { text: 0.08, list: 0.05 } as const;
+export const STAGGER = { text: 0.08, list: 0.05, chars: 0.02 } as const;
+export const CHAR_DIM = 0.55; // contact email characters start here (reads as text-muted), light up to 1
 export const SCRUB = { tight: 0.3, base: 0.6, loose: 1.2 } as const; // ScrollTrigger scrub smoothing
 export const OPENING_EXIT = { scale: 1.08, dim: 0.4, parallax: 1.4 } as const; // scene 01 exit (§01)
+export const SCALE_IN = { from: 1.1 } as const; // full-bleed posters on entry
+export const MARQUEE = { loopSec: 40, boostPerPx: 0.04, maxBoost: 2 } as const; // clients (§06)
 ```
 
 CSS mirrors for non-GSAP transitions: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -63,7 +66,8 @@ CSS mirrors for non-GSAP transitions: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)
 | Scattered → grid → close (CSS 3D plates, scrubbed)   | `PlateField`              | Prologue v1                             | Any other scene (it's the signature)  |
 | Canvas frame sequence, scrubbed                      | `FrameSequence`           | Prologue v2                             | Anything that must be interactive     |
 | Hover un-dim (opacity 0.7 → 1)                       | CSS transition            | Work cards on pointer devices           | Touch (no hover state)                |
-| Underline draw                                       | CSS `scaleX` on `::after` | Links                                   | Buttons                               |
+| Underline draw                                       | CSS `scaleX` on `::after` | Links (first: contact email, `08-Contact`) | Buttons                               |
+| Character stagger (opacity `CHAR_DIM` → 1)           | `StaggerChars`            | The contact email only                  | Body copy, anything > ~40 characters  |
 
 ## Scroll rules
 
@@ -104,7 +108,9 @@ the content from the HTML (LCP, SEO, no-JS). Instead:
   otherwise report a server/client attribute mismatch); it applies to that element only.
 - Start states live in `globals.css` → `@layer components`, scoped to `html[data-js]`:
   `[data-reveal]` (opacity 0; `wipe` gets the clip-path, `soft` the 16 px offset under
-  `no-preference`), `[data-scrub-word]` (opacity 0.3; 1 under `reduce`).
+  `no-preference`), `[data-scrub-word]` (opacity 0.3; 1 under `reduce`),
+  `[data-scale-in]` (scale 1.1 under `no-preference` only), `[data-stagger-char]`
+  (opacity `CHAR_DIM` under `no-preference` only).
 - GSAP animates **to** the final state (`fromTo` with the same start values, so the
   inline style matches the CSS). Without JS nothing is ever hidden.
 - Every new motion wrapper with a hidden start state follows this: add its `data-*`

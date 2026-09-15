@@ -184,6 +184,7 @@ export interface Site {
   statement: string;
   bio: [string, string, string];
   availability: string;
+  tools: string[]; // About mono list "TOOLS: …" (§07)
   email: string;
   socials: { label: string; href: string }[];
   vimeoReelId: string;
@@ -194,8 +195,8 @@ export interface Site {
 
 export interface SiteAssets {
   heroLoop: Loop;
-  reelPoster: string;
-  portrait: Still;
+  reelPoster: string | null; // null until the frame exists → LazyVimeo shows its surface block
+  portrait: Still | null; // null until shot → About shows a 4:5 surface block
   ogDefault: string;
 }
 ```

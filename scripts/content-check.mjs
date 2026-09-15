@@ -155,11 +155,15 @@ function checkSite() {
   asset(where, heroLoop.webm, LIMITS.heroLoopMaxBytes);
   asset(where, heroLoop.poster, LIMITS.posterMaxBytes);
 
-  expectPath(where, 'reelPoster', reelPoster, '/img/reel/poster.jpg');
-  asset(where, reelPoster, LIMITS.posterMaxBytes);
+  // null = not produced yet; still a deliverable, reported at its canonical path.
+  if (reelPoster !== null) expectPath(where, 'reelPoster', reelPoster, '/img/reel/poster.jpg');
+  asset(where, reelPoster ?? '/img/reel/poster.jpg', LIMITS.posterMaxBytes);
 
-  expectStill(where, portrait, '/img/portrait.jpg');
-  asset(where, portrait.src, LIMITS.portraitMaxBytes);
+  // null = not shot yet; still a deliverable, reported at its canonical path.
+  if (portrait !== null) expectStill(where, portrait, '/img/portrait.jpg');
+  asset(where, portrait?.src ?? '/img/portrait.jpg', LIMITS.portraitMaxBytes);
+  if (site.tools.length === 0) error(where, 'tools is empty');
+  for (const tool of site.tools) expectText(where, 'tool', tool);
 
   expectPath(where, 'ogDefault', ogDefault, '/og/default.jpg');
   asset(where, ogDefault, LIMITS.ogMaxBytes);

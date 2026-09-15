@@ -121,7 +121,9 @@ Exactly four levels visible to a user. Reference `ui-tokens.md` Typography for v
 - Never a logo wall, a testimonial slider, or a "services" grid.
 - Never a hamburger menu, a cookie banner, a chat widget, a scroll-progress bar,
   a preloader or a percentage counter.
-- Never an icon library; the play triangle and the close `×` are inline SVG/text.
+- Never an icon library; the play triangle and the close `×` are inline SVG/text, and the
+  three social glyphs (Instagram, Vimeo, LinkedIn) are Simple Icons paths (CC0) inlined in
+  `ui/SocialIcon.tsx` — decided 2026-09-15 at the developer's request; still no dependency.
 - Never `100vh` on mobile hero containers — use `100svh`/`100dvh` (address bar).
 - Never round corners beyond `radius-sm` except the play button.
 - Never more than one `accent` element visible per viewport.
