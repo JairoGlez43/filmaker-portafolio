@@ -68,6 +68,7 @@ CSS mirrors for non-GSAP transitions: `--ease-out: cubic-bezier(0.16, 1, 0.3, 1)
 | Hover un-dim (opacity 0.7 → 1)                       | CSS transition            | Work cards on pointer devices           | Touch (no hover state)                |
 | Underline draw                                       | CSS `scaleX` on `::after` | Links (first: contact email, `08-Contact`) | Buttons                               |
 | Character stagger (opacity `CHAR_DIM` → 1)           | `StaggerChars`            | The contact email only                  | Body copy, anything > ~40 characters  |
+| Page dissolve (View Transitions, opacity only)       | `<ViewTransition>` + CSS  | Case study → next case study (§13)      | Home ↔ case study, back button (instant) |
 
 ## Scroll rules
 

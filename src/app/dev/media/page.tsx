@@ -1,8 +1,8 @@
 import { LazyVimeo } from '@/components/media/LazyVimeo';
+import { StillsGallery } from '@/components/media/StillsGallery';
 import { VideoLoop } from '@/components/media/VideoLoop';
 import { getProject, getProjects, getSite } from '@/lib/content';
 import { PlayingCount } from './PlayingCount';
-import { StillsBench } from './StillsBench';
 
 /**
  * Temporary media bench for feature 05 (deleted in feature 21). Six real loops stacked
@@ -77,7 +77,7 @@ export default function MediaBench() {
           Lightbox · native dialog · Escape, backdrop and Close ×
         </p>
         {withStills.ok ? (
-          <StillsBench stills={withStills.data.stills} />
+          <StillsGallery stills={withStills.data.stills} />
         ) : (
           <p className="text-mono text-error font-mono">{withStills.error}</p>
         )}

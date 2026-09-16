@@ -6,17 +6,9 @@ import type { Project, Still } from '@/types/content';
 // Asset paths are canonical (asset-pipeline.md → Naming); the files arrive through the
 // Assets chat and `pnpm content:check` reports which ones are still missing.
 
-function stills(slug: string, title: string, count: number): Still[] {
-  return Array.from({ length: count }, (_, i) => {
-    const n = String(i + 1).padStart(2, '0');
-    return {
-      src: `/img/${slug}/still-${n}.jpg`,
-      alt: `Still ${n} from ${title}`,
-      width: 2400,
-      height: 1350,
-    };
-  });
-}
+// Projects without shot stills carry `stills: []` — the gallery is omitted (ui-rules → States →
+// Empty) instead of rendering broken images. Add 4–8 entries per project once the frames exist
+// (`pnpm asset:still`), each with a descriptive alt and its encoded width/height.
 
 // Demo stills for northern-light: the developer's own frames, encoded with `pnpm asset:still`
 // (dimensions are the encoded files'). Alt text describes the frame, never the client.
@@ -89,7 +81,7 @@ export const projects: Project[] = [
       poster: '/img/salt-roads/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('salt-roads', 'Salt Roads', 4),
+    stills: [],
     credits: [
       { label: 'Director', value: 'Ana Vidal' },
       { label: 'Editor', value: FILMMAKER },
@@ -113,7 +105,7 @@ export const projects: Project[] = [
       poster: '/img/interval/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('interval', 'Interval', 4),
+    stills: [],
     credits: [
       { label: 'Director', value: FILMMAKER },
       { label: 'DOP', value: FILMMAKER },
@@ -137,7 +129,7 @@ export const projects: Project[] = [
       poster: '/img/ninety-seconds/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('ninety-seconds', 'Ninety Seconds', 4),
+    stills: [],
     credits: [
       { label: 'Director', value: 'Sofía Ruano' },
       { label: 'Editor', value: FILMMAKER },
@@ -160,7 +152,7 @@ export const projects: Project[] = [
       poster: '/img/undertow/poster.jpg',
       durationSec: 7,
     },
-    stills: stills('undertow', 'Undertow', 4),
+    stills: [],
     credits: [
       { label: 'Director', value: 'Tomás Ferrer' },
       { label: 'Editor', value: FILMMAKER },

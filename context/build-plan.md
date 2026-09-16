@@ -238,12 +238,19 @@ poster only otherwise — all five demo projects), `11-Credits` (`<dl>`, empty r
 UI: Two-column grid, hover lift, lightbox.
 Logic: `Lightbox` from 05; images sized from data (no CLS).
 Done: `Escape`, click-outside and close button all work; focus returns to the clicked still.
+Built 2026-09-16: `media/StillsGallery` (promoted from the dev `StillsBench`, which was
+deleted) + `scenes/12-Stills`, mounted after Credits; omitted when a project has no stills.
 
 ### 19 Next project hand-off (scene 13)
 
 UI: Bottom strip with next project poster and title.
 Logic: `getNextProject(slug)` wraps around; fade transition on navigate.
 Done: Last project links to first; `work_open` fires with `from: slug`.
+Built 2026-09-16: `scenes/13-NextProject` (strip = `TrackLink` with `transitionTypes`
+`dissolve`) + React `<ViewTransition>` in `app/work/[slug]/page.tsx` + `::view-transition`
+CSS in `globals.css` — native View Transitions, no JS of ours, opacity only (the docs'
+recipe uses blur, which motion-rules bans), `animation: none` under reduced motion.
+`from` is the literal `'next'` (the analytics event's typed union), not the slug.
 
 ### 20 Per-project OG image
 

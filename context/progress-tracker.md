@@ -14,7 +14,9 @@ and next. Update after every completed feature. A feature is checked only after 
 - **Phase:** 2 — The film (`/`) — Phase 1 complete 2026-09-12
 - **Last completed:** Demo-content pass (2026-09-15) — every `{{PLACEHOLDER}}` in `src/data/*` replaced by clearly fictional demo facts ("Adriana Villates", fictional clients/credits/summaries) so the site can be judged visually; Nav gets a top scrim + `text-primary` over the hero (was unreadable on a bright sky); reel id swapped to a Vimeo embed that plays (`22439234`), reel poster + OG image generated from the developer's footage; `pnpm asset:portrait` added for the About photo
 - **In progress:** —
-- **Next:** 18 Stills gallery + lightbox (scene 12) on `/work/[slug]` · deferred until the developer's assets exist: 07 Prologue (9 plates), 11–12 Craft (direction still, storyboard SVG, 6 frames, log/grade pair)
+- **Next:** 20 Per-project OG image (`opengraph-image.tsx` with `ImageResponse`) · deferred until the developer's assets exist: 07 Prologue (9 plates), 11–12 Craft (direction still, storyboard SVG, 6 frames, log/grade pair), stills for 4 projects
+- **19 done 2026-09-16:** Next-project strip on every case study (wraps undertow → northern-light), `work_open {from: 'next'}`, page dissolve via native View Transitions (`<ViewTransition>` + `::view-transition` CSS, opacity only). Browser check: the fade in Chromium/Safari/Firefox; instant elsewhere
+- **18 done 2026-09-16:** `media/StillsGallery` + `scenes/12-Stills` on `/work/[slug]` (northern-light shows its 4 stills; the other four projects have `stills: []` and omit the gallery instead of rendering broken images)
 - **Phase 3 started 2026-09-15:** 17 Case-study skeleton done — `/work/[slug]` prerendered for the 5 projects (`dynamicParams = false` → unknown slugs are a static 404), title card, poster hero (no demo project has a `vimeoId`), credits table; per-project metadata (title template, summary, poster as OG until 20). The Selected Work cards no longer land on the 404. Housekeeping: the portrait source photo moved out of `public/` into `reelframe-sources/portrait/`
 - **Blockers:** `NEXT_PUBLIC_SITE_URL` not set in Vercel (production sitemap lists localhost) · iOS Safari autoplay check for 05 outstanding
 - **⏸ HUMAN gates open:** 07 needs the 9 prologue plates (`public/img/prologue/plate-01…09.jpg`, same grade family as the hero poster) · demo hero loop/poster exist but are 576p — see Asset status
@@ -46,8 +48,8 @@ and next. Update after every completed feature. A feature is checked only after 
 ### Phase 3 — Case study (`/work/[slug]`)
 
 - [x] 17 Case-study page skeleton (5 static pages; demo projects are poster-only — no Vimeo ids)
-- [ ] 18 Stills gallery + lightbox
-- [ ] 19 Next project hand-off
+- [x] 18 Stills gallery + lightbox (only northern-light has stills; others omit the gallery)
+- [x] 19 Next project hand-off (View Transitions dissolve)
 - [ ] 20 Per-project OG image
 
 ### Phase 4 — Polish & ship
@@ -99,6 +101,8 @@ _Append: date · decision · why. Keeps them from being re-litigated._
 - 2026-09-12 · Stills limit redefined as ≤ 2400 px on the longest side (`--max`), not width · a 9:16 frame capped by width alone is 10 MP and cannot meet 400 KB.
 - 2026-09-12 · Phase 2 starts with 08 (Opening), 07 (Prologue) deferred until the developer's own plates exist · 08 only needs the demo hero; 07 built on placeholder crops would be throwaway.
 - 2026-09-12 · Scene 01 exit is one scene-specific wrapper (`OpeningExit`) rather than generic `Parallax` + `ScaleIn` · both layers ride the same scroll; one timeline, one ScrollTrigger. A generic `Parallax` is created the day a second scene (About, 0.85) needs it.
+- 2026-09-16 · Page fade between case studies uses React's native `<ViewTransition>` + CSS, tagged per link · zero JS of ours, degrades to an instant navigation where unsupported; only the Next strip carries the `dissolve` type so back/forward and home links stay instant. Blur from the docs' recipe rejected (motion-rules).
+- 2026-09-16 · Projects without shot stills carry `stills: []`, not placeholder paths · scenes cannot check the disk; placeholder paths rendered broken images on four case studies. Same principle as `reelPoster`/`portrait`: the data says "not yet", the gallery is omitted. The 4–8 stills per project stay listed as deliverables in Asset status.
 - 2026-09-15 · `/work/[slug]` uses `dynamicParams = false` · every case study is prerendered from `getProjects()`; an unknown slug is a static 404 (the "missing reel" card) with nothing rendered at request time — consistent with "static only".
 - 2026-09-15 · Title card's "holds 0.8 s, fades into the hero" (§09) is scroll-driven, not a timer · motion-rules allow timers only for the scroll cue and the marquee; the title card is the first viewport, the hero the next.
 - 2026-09-15 · Source files never sit in `public/` · the demo pass had left `public/profile_pic/adriana-pp.jpeg` there (it would be served publicly); moved to `reelframe-sources/portrait/`. `public/` holds pipeline outputs only.
